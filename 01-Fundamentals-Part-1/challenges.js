@@ -23,9 +23,15 @@ let markHeight = 1.69;
 let johnMass = 92;
 let johnHeight = 1.95;
 
+const getBMI = (mass, height) => mass / height ** 2;
+const compareBMI = (markBMI, johnBMI) => (markBMI > johnBMI ? true : false);
+const resultsOutput = (scenerio, isMarksBMIHeigherThanJohns) =>
+  console.log(
+    `${scenerio}: Is Mark's BMI higher than John's: ${isMarksBMIHeigherThanJohns}`
+  );
+
 let markBMI = getBMI(markMass, markHeight);
 let johnBMI = getBMI(johnMass, johnHeight);
-
 let isMarksBMIHeigherThanJohns = compareBMI(markBMI, johnBMI);
 
 resultsOutput('Data 1', isMarksBMIHeigherThanJohns);
@@ -39,23 +45,6 @@ johnHeight = 1.76;
 
 markBMI = getBMI(markMass, markHeight);
 johnBMI = getBMI(johnMass, johnHeight);
-
 isMarksBMIHeigherThanJohns = compareBMI(markBMI, johnBMI);
 
 resultsOutput('Data 2', isMarksBMIHeigherThanJohns);
-
-function getBMI(mass, height) {
-  let bmi = mass / height ** 2;
-  return bmi;
-}
-
-function compareBMI(markBMI, johnBMI) {
-  let markHasHigherBMI = markBMI > johnBMI ? true : false;
-  return markHasHigherBMI;
-}
-
-function resultsOutput(scenerio, isMarksBMIHeigherThanJohns) {
-  console.log(
-    `${scenerio}: Is Mark's BMI higher than John's: ${isMarksBMIHeigherThanJohns}`
-  );
-}
