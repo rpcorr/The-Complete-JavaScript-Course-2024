@@ -148,6 +148,7 @@ console.log(`String
 multiple
 lines`); */
 
+/*
 // Lesson: Taking Decisions: if/else Statements
 
 const age = 15;
@@ -168,3 +169,32 @@ if (birthYear <= 2000) {
   century = 21;
 }
 console.log(century);
+
+*/
+
+// Lesson: Type Conversion and Coercion
+
+// type conversion
+const inputYear = '1991';
+console.log(Number(inputYear), inputYear);
+console.log(Number(inputYear) + 18);
+
+console.log(Number('Ronan'));
+console.log(typeof NaN);
+
+console.log(String(23), 23);
+
+// type coercion
+console.log('I am ' + 46 + ' years old'); // numbers are converted to strings using plus(+)
+console.log('23' - '10' - 3); // strings are converted to numbers using minus(-) 10
+console.log('23' + '10' + 3); // '23103' (string)
+console.log('23' + '10' - 3); //2307 (number)
+console.log('23' * '2'); // 46 (number)
+console.log('23' / '2'); // 11.5 (number)
+
+let n = '1' + 1;
+n = n - 1;
+console.log(n); // result 10 number
+
+console.log(2 + 3 + 4 + '5'); // outputs '95' (string)
+console.log('10' - '4' - '3' - 2 + '5'); // outputs '15' (string)
