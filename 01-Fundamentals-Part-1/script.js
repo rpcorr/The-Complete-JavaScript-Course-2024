@@ -201,6 +201,7 @@ console.log(2 + 3 + 4 + '5'); // outputs '95' (string)
 console.log('10' - '4' - '3' - 2 + '5'); // outputs '15' (string)
 */
 
+/*
 // Lesson: Truthy and Falsy Values
 
 // There are 5 falsy values: 0, '', undefined, null, NaN
@@ -222,3 +223,27 @@ if (height) {
 } else {
   console.log('Height is UNDEFINED');
 }
+*/
+
+// Lesson: Equality Operators: == vs ===
+const age = '18';
+if (age === 18) console.log('You just became an adult 😀 (strict)');
+
+if (age == 18) console.log('You just became an adult 😀 (loose)');
+
+const favourite = Number(prompt("What's your favourite number?"));
+console.log(favourite);
+console.log(typeof favourite);
+
+if (favourite === 17) {
+  // '17' == 17
+  console.log('Cool! 17 is an amazing number!');
+} else if (favourite === 7) {
+  console.log('7 is also a cool number');
+} else if (favourite === 9) {
+  console.log('9 is also a cool number');
+} else {
+  console.log('Number is not 17 or 7 or 9');
+}
+
+if (favourite !== 17) console.log('Why not 17?');
