@@ -139,59 +139,52 @@ Test data:
 
 console.log('\n\nCODING CHALLENGE 3');
 
-// calculate the average scores for each team
+let bMinimumScoreInPlay = false;
+const minimumScore = 100;
+
+// 1. Calculate the average scores for each team
 let dolphinsAvgScore = calculateAverageScore(96, 108, 89);
 let koalasAvgScore = calculateAverageScore(88, 91, 110);
 
-console.log('Data 1:\n');
-console.log('Dolphins: 96, 108, 89');
-console.log('Koalas: 88, 91, 110\n\n');
-
 console.log('1. Calculate the average score for each team');
-console.log(`   Team Dolphins average score is: ${dolphinsAvgScore}`);
-console.log(`   Team Koalas average score is: ${koalasAvgScore}`);
 
+displayDataSet('Data 1', 96, 108, 89, 88, 91, 110);
+displayAverageScores(dolphinsAvgScore, koalasAvgScore);
+
+// 2. Compare average score and determine the winner
 console.log(
   "\n\n2. Compare the team's average scores to determine the winner of the competition"
 );
 
-if (dolphinsAvgScore > koalasAvgScore) {
-  console.log(`   Team Dolphins is the winner of the competition! 🏆`);
-} else if (dolphinsAvgScore < koalasAvgScore) {
-  console.log(`   Team Koalas is the winner of the competition! 🏆`);
-} else {
-  console.log(
-    `   Neither Team Dolphins nor Team Koalas is the winner of the competition as it is a draw!`
-  );
-}
+outputResult(
+  bMinimumScoreInPlay,
+  minimumScore,
+  dolphinsAvgScore,
+  koalasAvgScore
+);
+
+// 3. Include a minimum score requirement
+bMinimumScoreInPlay = true;
+dolphinsAvgScore = calculateAverageScore(97, 112, 101);
+koalasAvgScore = calculateAverageScore(109, 95, 123);
 
 console.log(
   '\n\n3. Bonus 1: Include a requirement for a minimum score of 100. With this rule, a team only wins if it has a higher score than the other team, and the same time a score of at least 100 points'
 );
 
+displayDataSet('Bonus 1', 97, 112, 101, 109, 95, 123);
+displayAverageScores(dolphinsAvgScore, koalasAvgScore);
+outputResult(
+  bMinimumScoreInPlay,
+  minimumScore,
+  dolphinsAvgScore,
+  koalasAvgScore
+);
+
+// 4. minimun score also applies to a draw
+bMinimumScoreInPlay = true;
 dolphinsAvgScore = calculateAverageScore(97, 112, 101);
-koalasAvgScore = calculateAverageScore(109, 95, 123);
-const minimumScore = 100;
-
-console.log('   Bonus 1 Data:\n');
-console.log('   Dolphins: 97, 112, 101');
-console.log('   Koalas: 109, 95, 123\n\n');
-
-console.log(`   Team Dolphins average score is: ${dolphinsAvgScore}`);
-console.log(`   Team Koalas average score is: ${koalasAvgScore}`);
-
-if (dolphinsAvgScore > koalasAvgScore && dolphinsAvgScore >= minimumScore) {
-  console.log(`   Team Dolphins is the winner of the competition! 🏆`);
-} else if (
-  dolphinsAvgScore < koalasAvgScore &&
-  koalasAvgScore >= minimumScore
-) {
-  console.log(`   Team Koalas is the winner of the competition! 🏆`);
-} else {
-  console.log(
-    `   Neither Team Dolphins nor Team Koalas is the winner of the competition as it is a draw!`
-  );
-}
+koalasAvgScore = calculateAverageScore(109, 95, 106);
 
 console.log(
   '\n\n4. Bonus 2: Minimum score also applies to a draw! So a draw only happens when both teams have the same score and both have a score greater or equal 100 points. Otherwise, no team wins the trophy'
@@ -200,20 +193,73 @@ console.log(
 dolphinsAvgScore = calculateAverageScore(97, 112, 81);
 koalasAvgScore = calculateAverageScore(109, 95, 86);
 
-console.log('   Bonus 2 Data:\n');
-console.log('   Dolphins: 97, 112, 81');
-console.log('   Koalas: 109, 95, 86\n\n');
+displayDataSet('Bonus 2', 97, 112, 81, 109, 95, 86);
+displayAverageScores(dolphinsAvgScore, koalasAvgScore);
+outputResult(
+  bMinimumScoreInPlay,
+  minimumScore,
+  dolphinsAvgScore,
+  koalasAvgScore
+);
 
-if (dolphinsAvgScore === koalasAvgScore && dolphinsAvgScore >= minimumScore) {
-  console.log(
-    `   Dolphins average score: ${dolphinsAvgScore}
-   Koalas average score: ${koalasAvgScore}
-   It's a draw! Both teams have an average score of ${dolphinsAvgScore}. Both teams win the trophy.`
-  );
-} else {
-  console.log(`  Dolphins average score: ${dolphinsAvgScore}
-  Koalas average score: ${koalasAvgScore}
-  Since both teams have less than 100, neither wins the trophy`);
+dolphinsAvgScore = calculateAverageScore(97, 112, 101);
+koalasAvgScore = calculateAverageScore(109, 95, 106);
+
+displayDataSet('Bonus 2', 97, 112, 101, 109, 95, 106);
+displayAverageScores(dolphinsAvgScore, koalasAvgScore);
+outputResult(
+  bMinimumScoreInPlay,
+  minimumScore,
+  dolphinsAvgScore,
+  koalasAvgScore
+);
+
+/// FUNCTIONS
+
+function displayDataSet(scenerio, d1, d2, d3, k1, k2, k3) {
+  console.log(`\n   ${scenerio} Data:\n`);
+  console.log(`   Dolphins: ${d1}, ${d2}, ${d3}`);
+  console.log(`   Koalas: ${k1}, ${k2}, ${k3}\n\n`);
+}
+
+function displayAverageScores(dolphinsAvgScore, koalasAvgScore) {
+  console.log(`   Team Dolphins average score is: ${dolphinsAvgScore}`);
+  console.log(`   Team Koalas average score is: ${koalasAvgScore}`);
+}
+
+function outputResult(
+  bMinimumScoreInPlay,
+  minimumScore,
+  dolphinsAvgScore,
+  koalasAvgScore
+) {
+  if (bMinimumScoreInPlay) {
+    if (dolphinsAvgScore > koalasAvgScore && dolphinsAvgScore >= minimumScore) {
+      console.log(`   Team Dolphins is the winner of the competition! 🏆`);
+    } else if (
+      dolphinsAvgScore < koalasAvgScore &&
+      koalasAvgScore >= minimumScore
+    ) {
+      console.log(`   Team Koalas is the winner of the competition! 🏆`);
+    } else if (
+      dolphinsAvgScore === koalasAvgScore &&
+      dolphinsAvgScore >= minimumScore
+    ) {
+      console.log(
+        `   It's a draw! Both teams have an average score of ${dolphinsAvgScore}. Both teams win the trophy! 🏆`
+      );
+    } else {
+      console.log(
+        `   Since both teams have less than 100, neither wins the trophy`
+      );
+    }
+  } else {
+    if (dolphinsAvgScore > koalasAvgScore) {
+      console.log(`   Team Dolphins is the winner of the competition! 🏆`);
+    } else if (dolphinsAvgScore < koalasAvgScore) {
+      console.log(`   Team Koalas is the winner of the competition! 🏆`);
+    }
+  }
 }
 
 function calculateAverageScore(num1, num2, num3) {
