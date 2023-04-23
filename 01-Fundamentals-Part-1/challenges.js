@@ -54,3 +54,52 @@ johnBMI = getBMI(johnMass, johnHeight);
 isMarksBMIHeigherThanJohns = compareBMI(markBMI, johnBMI);
 
 resultsOutput('Data 2', markBMI, johnBMI, isMarksBMIHeigherThanJohns);
+
+/*
+Coding Challenge #2
+Use the BMI example from Challenge #1, and the code you already wrote, and improve it.
+
+Your tasks:
+1. Print a nice output to the console, saying who has the higher BMI. The message
+is either "Mark's BMI is higher than John's!" or "John's BMI is higher than Mark's!"
+2. Use a template literal to include the BMI values in the outputs. Example: "Mark's
+BMI (28.3) is higher than John's (23.9)!"
+
+Hint: Use an if/else statement 😉
+*/
+
+// Data 1
+markMass = 78;
+markHeight = 1.69;
+
+johnMass = 92;
+johnHeight = 1.95;
+
+markBMI = getBMI(markMass, markHeight);
+johnBMI = getBMI(johnMass, johnHeight);
+
+whoHasTheHigherBMI('Data 1', markBMI, johnBMI);
+
+// Data 2
+markMass = 95;
+markHeight = 1.88;
+
+johnMass = 85;
+johnHeight = 1.76;
+
+markBMI = getBMI(markMass, markHeight);
+johnBMI = getBMI(johnMass, johnHeight);
+
+whoHasTheHigherBMI('Data 2', markBMI, johnBMI);
+
+function whoHasTheHigherBMI(scenerio, markBMI, johnBMI) {
+  if (markBMI > johnBMI) {
+    console.log(
+      `${scenerio}: Mark's BMI, (${markBMI}) is higher than John's, (${johnBMI}) `
+    );
+  } else {
+    console.log(
+      `${scenerio}: John's BMI, (${johnBMI}) is higher than Mark's, (${markBMI}) `
+    );
+  }
+}
