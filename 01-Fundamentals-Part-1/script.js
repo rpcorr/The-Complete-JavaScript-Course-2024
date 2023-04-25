@@ -250,6 +250,7 @@ if (favourite === 17) {
 if (favourite !== 17) console.log('Why not 17?');
 */
 
+/*
 // Lesson: Logical Operators
 const hasDriversLicense = true; // A
 const hasGoodVision = true; // B
@@ -264,6 +265,7 @@ console.log(!hasDriversLicense);
   console.log('Someone else should drive...');
 }*/
 
+/*
 const isTired = false; // C
 console.log(hasDriversLicense && hasGoodVision && isTired);
 
@@ -271,4 +273,48 @@ if (hasDriversLicense && hasGoodVision && !isTired) {
   console.log('Sarah is able to drive!');
 } else {
   console.log('Someone else should drive...');
+}
+*/
+
+// Lesson: The Switch Statement
+const day = 'sunday';
+
+console.log('Using the switch statment\n');
+switch (day) {
+  case 'monday': // day === 'monday'
+    console.log('Plan course structure');
+    console.log('Go to coding meetup');
+    break;
+  case 'tuesday':
+    console.log('Prepare theory videos');
+    break;
+  case 'wednesday':
+  case 'thursday':
+    console.log('Write code examples');
+    break;
+  case 'friday':
+    console.log('Record videos');
+    break;
+  case 'saturday':
+  case 'sunday':
+    console.log('Enjoy the weekend 😊');
+    break;
+  default:
+    console.log('Not a valid day!');
+}
+
+console.log('\nUsing If/Else');
+if (day === 'monday') {
+  console.log('Plan course structure');
+  console.log('Go to coding meetup');
+} else if (day === 'tuesday') {
+  console.log('Prepare theory videos');
+} else if (day === 'wednesday' || day === 'thursday') {
+  console.log('Write code examples');
+} else if (day === 'friday') {
+  console.log('Record videos');
+} else if (day === 'saturday' || day === 'sunday') {
+  console.log('Enjoy the weekend 😊');
+} else {
+  console.log('Not a valid day!');
 }
