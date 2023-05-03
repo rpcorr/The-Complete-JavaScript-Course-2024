@@ -88,6 +88,7 @@ function fruitProcessor(apples, oranges) {
 console.log(fruitProcessor(2, 3));
 */
 
+/*
 // Lesson: Reviewing Functions
 const calcAge = function (birthYear) {
   return 2037 - birthYear;
@@ -108,3 +109,54 @@ const yearsUntilRetirement = function (birthYear, firstName) {
 
 console.log(yearsUntilRetirement(1991, 'Ronan'));
 console.log(yearsUntilRetirement(1950, 'Mike'));
+*/
+
+// Lesson: Introduction to Arrays
+const friend1 = 'Michael';
+const friend2 = 'Steven';
+const friend3 = 'Peter';
+
+const friends = ['Michael', 'Steven', 'Peter'];
+console.log(friends);
+
+const years = new Array(1991, 1984, 2008, 2020);
+console.log(years);
+
+console.log(friends[0]);
+console.log(friends[2]);
+
+console.log(friends.length);
+// print the last element in array
+console.log(friends[friends.length - 1]);
+
+friends[2] = 'Jay';
+console.log(friends);
+
+// friends = ['Bob', 'Alice'] -> not possible to change the entire array since is declared as a const
+
+const firstName = 'Jonas';
+const jonas = [firstName, 'Schmedtmann', 2037 - 1991, 'teacher', friends];
+console.log(jonas);
+console.log(jonas.length);
+
+// Excerise
+const calcAge = function (birthYear) {
+  return 2037 - birthYear;
+};
+
+const birthYears = [1990, 1967, 2002, 2010, 2018];
+
+//console.log(calcAge(birthYears)); // produce NaN
+
+const age1 = calcAge(birthYears[0]);
+const age2 = calcAge(birthYears[1]);
+const age3 = calcAge(birthYears[birthYears.length - 1]);
+
+console.log(age1, age2, age3);
+
+const ages = [
+  calcAge(birthYears[0]),
+  calcAge(birthYears[1]),
+  calcAge(birthYears[birthYears.length - 1]),
+];
+console.log(ages);
