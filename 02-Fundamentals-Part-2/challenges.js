@@ -98,22 +98,23 @@ GOOD LUCK 😀
 
 console.log('\nCODING CHALLENGE 2');
 
-const calcTip = (bill) => {
-  return (tip = bill >= 50 && bill <= 300 ? 0.15 : 0.2);
-};
+/*const calcTip = (bill) => {
+  return (tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2);
+};*/
+
+// alternative arrow function method
+const calcTip = (bill) =>
+  bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
 
 const bills = [125, 555, 44];
-const tips = [
-  calcTip(125) * bills[0],
-  calcTip(555) * bills[1],
-  calcTip(44) * bills[2],
-];
+const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
 
-const total = new Array(
+const totals = new Array(
   bills[0] + tips[0],
   bills[1] + tips[1],
   bills[2] + tips[2]
 );
+
 console.log(`The bills are ${bills}.`);
 console.log(`The tips for each bill are ${tips}.`);
-console.log(`Giving a total of ${total} respectively.`);
+console.log(`Giving a total of ${totals} respectively.`);
