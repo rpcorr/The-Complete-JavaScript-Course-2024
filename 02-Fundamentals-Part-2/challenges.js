@@ -165,18 +165,19 @@ const john = {
     this.bmi = this.mass / this.height ** 2;
     return this.bmi;
   },
-
-  getSummary: function () {
-    return `${mark.fullName}'s BMI ${mark.calcBMI()}\n${
-      john.fullName
-    }'s BMI ${john.calcBMI()}
-
-${mark.calcBMI() > john.calcBMI() ? mark.fullName : john.fullName}'s BMI, (${
-      mark.bmi > john.bmi ? mark.bmi.toFixed(1) : john.bmi.toFixed(1)
-    }), is higher than ${
-      mark.bmi < john.bmi ? mark.fullName : john.fullName
-    }'s (${mark.bmi < john.bmi ? mark.bmi.toFixed(1) : john.bmi.toFixed(1)})!`;
-  },
 };
 
-console.log(`${john.getSummary()}`);
+mark.calcBMI();
+john.calcBMI();
+
+console.log(mark.bmi, john.bmi);
+
+if (mark.bmi > john.bmi) {
+  console.log(
+    `${mark.fullName}'s BMI (${mark.bmi}) is higher than ${john.fullName}'s BMI (${john.bmi})`
+  );
+} else {
+  console.log(
+    `${john.fullName}'s BMI (${john.bmi}) is higher than ${mark.fullName}'s BMI (${mark.bmi})`
+  );
+}
