@@ -382,6 +382,7 @@ for (let i = 0; i < jonas.length; i++) {
 
 */
 
+/*
 // Lesson: Looping Backwards and Loops in Loops
 const jonas = [
   'Jonas',
@@ -404,4 +405,25 @@ for (let exercise = 1; exercise < 4; exercise++) {
   for (let rep = 1; rep < 6; rep++) {
     console.log(`Exercise ${exercise}: Lifting weight repetition ${rep} 🏋️‍♂️`);
   }
+}
+*/
+
+// Lesson: The While Loop
+
+// for (let rep = 1; rep <= 10; rep++) {
+//   console.log(`FOR Loop: Lifting weights reptition ${rep} 🏋️‍♂️`);
+// }
+
+let rep = 1;
+while (rep <= 10) {
+  //console.log(`WHILE Loop: Lifting weights reptition ${rep} 🏋️‍♂️`);
+  rep++;
+}
+
+let dice = Math.trunc(Math.random() * 6) + 1;
+
+while (dice !== 6) {
+  console.log(`You rolled a ${dice}`);
+  dice = Math.trunc(Math.random() * 6) + 1;
+  if (dice === 6) console.log(`You rolled a ${dice}; Loop is about to end...`);
 }
