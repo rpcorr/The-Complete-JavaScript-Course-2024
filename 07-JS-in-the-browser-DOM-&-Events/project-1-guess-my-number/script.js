@@ -4,8 +4,8 @@ let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highscore = 0;
 
-const displayMessage = (message) => {
-  document.querySelector('.message').textContent = message;
+const displayMessage = (selector, message) => {
+  document.querySelector(selector).textContent = message;
 };
 
 document.querySelector('.check').addEventListener('click', () => {
@@ -13,30 +13,33 @@ document.querySelector('.check').addEventListener('click', () => {
 
   // When there is no input
   if (!guess) {
-    displayMessage('⛔ No number!');
+    displayMessage('.message', '⛔ No number!');
 
     // When player wins the game
   } else if (guess === secretNumber) {
-    displayMessage('🎉 Correct Number!');
-    document.querySelector('.number').textContent = secretNumber;
+    displayMessage('.message', '🎉 Correct Number!');
+    displayMessage('.number', secretNumber);
 
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
 
     if (score > highscore) {
       highscore = score;
-      document.querySelector('.highscore').textContent = highscore;
+      displayMessage('.highscore', highscore);
     }
 
     // When guess is wrong
   } else if (guess !== secretNumber) {
     if (score > 1) {
-      displayMessage(guess > secretNumber ? '📈 Too high!' : '📉 Too low!');
+      displayMessage(
+        '.message',
+        guess > secretNumber ? '📈 Too high!' : '📉 Too low!'
+      );
       score--;
       document.querySelector('.score').textContent = score;
     } else {
-      displayMessage('💥You lost the game!');
-      document.querySelector('.score').textContent = 0;
+      displayMessage('.message', '💥You lost the game!');
+      displayMessage('.score', 0);
     }
   }
 });
@@ -61,8 +64,8 @@ document.querySelector('.again').addEventListener('click', () => {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
 
   document.querySelector('.number').textContent = '?';
-  displayMessage('Start guessing...');
-  document.querySelector('.score').textContent = score;
+  displayMessage('.message', 'Start guessing...');
+  displayMessage('.score', score);
   document.querySelector('.guess').value = '';
 
   document.querySelector('body').style.backgroundColor = '#222';
