@@ -12,6 +12,11 @@ const diceEl = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
+const btnRules = document.querySelector('.btn--rules');
+
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal');
 
 // delcare an array and variables
 let scores, currentScore, activePlayer, playing;
@@ -52,6 +57,16 @@ const switchPlayer = () => {
   activePlayer = activePlayer === 0 ? 1 : 0;
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
+};
+
+const openModal = () => {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+const closeModal = () => {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
 };
 
 // Rolling dice functionality
@@ -101,6 +116,20 @@ btnHold.addEventListener('click', () => {
       // Switch to the next player
       switchPlayer();
     }
+  }
+});
+
+// Open the rules modal
+btnRules.addEventListener('click', openModal);
+
+// Close the rules modal
+btnCloseModal.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+
+// add ESC key functionally to close the rules modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
   }
 });
 
