@@ -13,15 +13,37 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+// delcare an array and variables
+let scores, currentScore, activePlayer, playing;
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+// Starting conditions
+const init = () => {
+  // set array and variables values
+  scores = [0, 0]; // cummulative scores
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  // reset text content to 0
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  // hide the dice
+  diceEl.classList.add('hidden');
+
+  // remove player--winner class
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+
+  // set active player to player0
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+
+// run the initial state of game
+init();
 
 const switchPlayer = () => {
   currentScore = 0;
@@ -82,32 +104,4 @@ btnHold.addEventListener('click', () => {
   }
 });
 
-btnNew.addEventListener('click', () => {
-  // reset scores  text
-  score0El.textContent = 0;
-  score1El.textContent = 0;
-  current0El.textContent = 0;
-  current1El.textContent = 0;
-
-  // reset current score
-  currentScore = 0;
-
-  // reset cummulative scores
-  scores[0] = 0;
-  scores[1] = 0;
-
-  // hide the dice
-  diceEl.classList.add('hidden');
-
-  // remove player--winner class
-  document.querySelector(`.player--0`).classList.remove('player--winner');
-  document.querySelector(`.player--1`).classList.remove('player--winner');
-
-  // set active player to player0
-  document.querySelector(`.player--0`).classList.add('player--active');
-  document.querySelector(`.player--1`).classList.remove('player--active');
-  activePlayer = 0;
-
-  // set playing variable to true
-  playing = true;
-});
+btnNew.addEventListener('click', init);
