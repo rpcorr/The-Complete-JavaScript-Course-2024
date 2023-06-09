@@ -55,6 +55,7 @@ btnRoll.addEventListener('click', () => {
   }
 });
 
+// Holding the current number functionality
 btnHold.addEventListener('click', () => {
   if (playing) {
     // 1. Add current score to active player's score
@@ -79,4 +80,34 @@ btnHold.addEventListener('click', () => {
       switchPlayer();
     }
   }
+});
+
+btnNew.addEventListener('click', () => {
+  // reset scores  text
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  // reset current score
+  currentScore = 0;
+
+  // reset cummulative scores
+  scores[0] = 0;
+  scores[1] = 0;
+
+  // hide the dice
+  diceEl.classList.add('hidden');
+
+  // remove player--winner class
+  document.querySelector(`.player--0`).classList.remove('player--winner');
+  document.querySelector(`.player--1`).classList.remove('player--winner');
+
+  // set active player to player0
+  document.querySelector(`.player--0`).classList.add('player--active');
+  document.querySelector(`.player--1`).classList.remove('player--active');
+  activePlayer = 0;
+
+  // set playing variable to true
+  playing = true;
 });
