@@ -85,7 +85,7 @@ console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.z);
 */
-
+/*
 // Lesson: The this keyword in Practice
 console.log(this);
 
@@ -121,3 +121,62 @@ matilda.calcAge();
 
 const f = jonas.calcAge;
 f(); // produce this undefined because it is not attached to any object
+*/
+
+// Lesson: Regular Functions vs. Arrow Functions
+var firstName = 'Matilda';
+
+const jonas = {
+  firstName: 'Jonas',
+  year: 1991,
+  calcAge: function () {
+    //console.log(this);
+    console.log(2037 - this.year);
+
+    // Solution 1:
+    // how to handle this keyword within a function in a function
+    // const self = this;
+    // const isMillenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    //   //console.log(this.year >= 1981 && this.year <= 1996);
+    // };
+
+    // Solution 2:
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillenial();
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+
+  greeter: function () {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+
+jonas.greet();
+// console.log(this.firstName);  // produce undefined
+// jonas.greeter();
+
+jonas.calcAge();
+
+// argumnent keyword
+const addExpression = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpression(2, 5);
+addExpression(2, 5, 8, 12);
+
+var addArrowExpression = (a, b) => {
+  console.log(arguments);
+  return a + b;
+};
+addArrowExpression(2, 5, 8);
