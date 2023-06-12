@@ -239,6 +239,7 @@ restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
 restaurant.orderPizza('mushrooms');
 */
 
+/*
 // Lesson: Short Circuiting (&& and ||)
 
 console.log('---- OR ----');
@@ -269,3 +270,14 @@ if (restaurant.orderPizza) {
 }
 
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+
+*/
+
+// Lesson: The Nullish Coalescing Operator (??)
+restaurant.numGuests = 0;
+const guests = restaurant.numGuests || 10;
+console.log(guests);
+
+// Nullish values are: null and undefined (doesn't include 0 or '')
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
