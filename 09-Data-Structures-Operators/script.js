@@ -410,6 +410,8 @@ for (const [day, { open, close }] of entries) {
 }
 */
 
+/*
+
 // Lesson: Sets
 
 const ordersSet = new Set([
@@ -459,3 +461,50 @@ console.log(
 // count how many different letters in name
 console.log(new Set('jonasschmedtmann').size);
 console.log(new Set('jonas schmedtmann').size);
+*/
+
+// Lesson: Maps: Fundamentals
+const rest = new Map();
+rest.set('name', 'Classico Italino');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+// read data from maps
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get('1'));
+console.log(rest.get(1));
+
+// print result base on outcome
+const time = 8;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+// check if map contains a certain key
+console.log(rest.has('categories'));
+
+// delete element from map based on a key
+rest.delete(2);
+console.log(rest);
+
+// get map size
+console.log(rest.size);
+
+// clear map
+// rest.clear();
+// to make it work
+const arr = [1, 2];
+rest.set(arr, 'Test');
+
+rest.set(document.querySelector('h1'), 'Heading');
+
+console.log(rest);
+console.log(rest.size);
+
+// console.log(rest.get([1, 2])); // does not work
+console.log(rest.get(arr)); // does work
