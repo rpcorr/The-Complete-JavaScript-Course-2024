@@ -380,6 +380,8 @@ if (users.length > 0) console.log(users[0].name);
 else console.log('User array empty');
 */
 
+/*
+
 // Lesson: Looping Objects: Object Keys, Values, and Entries
 
 // Property NAMES
@@ -406,3 +408,54 @@ const entries = Object.entries(openingHours);
 for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}`);
 }
+*/
+
+// Lesson: Sets
+
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+console.log(ordersSet);
+
+// Strings are also iterables
+console.log(new Set('Jonas'));
+console.log(new Set('Ronan'));
+
+// get set size
+console.log(ordersSet.size);
+
+// check set if it contain a value
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+
+// add to a set
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+
+// delete from a set
+ordersSet.delete('Risotto');
+
+// clear a set
+//ordersSet.clear();
+
+console.log(ordersSet);
+
+for (const order of ordersSet) console.log(order);
+
+// Example
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+
+// count how many different letters in name
+console.log(new Set('jonasschmedtmann').size);
+console.log(new Set('jonas schmedtmann').size);
