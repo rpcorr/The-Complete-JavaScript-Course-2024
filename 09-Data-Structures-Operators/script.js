@@ -548,7 +548,9 @@ console.log([...question.values()]);
 
 */
 
+/*
 // Lesson: Working With Strings - Part 1
+
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
 
@@ -590,3 +592,75 @@ console.log(new String('Ronan'));
 console.log(typeof new String('Ronan'));
 
 console.log(typeof new String('Ronan').slice(1));
+*/
+
+// Lesson: Working With Strings - Part 2
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+console.log('Ronan'.toUpperCase());
+
+// Fix capitalization in name
+const passenger = 'jOnAS'; // should be Jonas
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+const fixCapitalization = name => {
+  console.log(
+    name.toLowerCase()[0].toUpperCase() + name.toLowerCase().slice(1)
+  );
+};
+
+fixCapitalization('rOnAn');
+fixCapitalization('MELisSa');
+fixCapitalization('STePhAniE');
+
+// comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// replacing
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23.  Boarding door 23!';
+
+console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate')); replaceAll now works
+
+console.log(announcement.replace(/door/g, 'gate')); // replace all occurances
+
+// Booleans
+const plane2 = 'Airbus A320neo';
+console.log(plane2.includes('A320'));
+console.log(plane2.includes('Boeing'));
+console.log(plane2.startsWith('Air'));
+
+if (plane2.startsWith('Airbus') && plane2.endsWith('neo')) {
+  console.log('Part of the New Airbus family');
+}
+
+// practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun'))
+    console.log('You are NOT allowed on board');
+  else console.log('Welcome aboard!');
+};
+
+checkBaggage('I have a laptop, some Food, and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
