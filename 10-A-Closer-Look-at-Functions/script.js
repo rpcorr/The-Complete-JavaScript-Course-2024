@@ -65,6 +65,8 @@ newPassport(jonas);
 checkIn(flight, jonas);
 */
 
+/*
+
 // Lesson: Functions Accepting Callback Functions
 const oneWord = function (str) {
   return str.replace(/ /g, '').toLowerCase();
@@ -93,3 +95,21 @@ const high5 = function () {
 
 document.body.addEventListener('click', high5);
 ['Jonas', 'Martha', 'Adam'].forEach(high5);
+*/
+
+// Lesson: Functions Returning Functions
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+// arrow function
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+
+const greeterHey = greet('Hey');
+greeterHey('Jonas');
+greeterHey('Steven');
+
+greet('Hello')('Jonas');
+greetArr('Hi')('Ronan');
