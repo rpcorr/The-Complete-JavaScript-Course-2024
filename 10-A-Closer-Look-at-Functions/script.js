@@ -220,6 +220,7 @@ console.log(addVAT2(100));
 console.log(addVAT2(23));
 */
 
+/*
 // Lesson: Immediately Invoked Function Expressions (IIFE)
 const runOnce = function () {
   console.log('This will never run again');
@@ -240,3 +241,22 @@ runOnce();
 
 //console.log(isPrivate);
 console.log(notPrivate);
+*/
+
+// Lesson: Closures
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
