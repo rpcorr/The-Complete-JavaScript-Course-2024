@@ -238,6 +238,7 @@ currenciesUnique.forEach(function (value, key, map) {
 });
 */
 
+/*
 // Lesson: The map Method
 const euroToUSD = 1.1;
 
@@ -263,7 +264,9 @@ const movementsDescriptions = movements.map(
 );
 
 console.log(movementsDescriptions);
+*/
 
+/*
 // Lesson: Computing Usernames
 
 const createUsernamesLesson = function (accs) {
@@ -277,7 +280,9 @@ const createUsernamesLesson = function (accs) {
 };
 
 createUsernamesLesson(accounts);
+*/
 
+/*
 // Lesson: The filter Method
 const deposits = movements.filter(function (mov) {
   return mov > 0;
@@ -288,6 +293,7 @@ const withdrawals = movements.filter(mov => mov < 0);
 console.log(movements);
 console.log(deposits);
 console.log(withdrawals);
+*/
 
 /*
 // Lesson: The reduce Method
@@ -315,6 +321,7 @@ const max = movements.reduce((acc, mov) => {
 console.log(max);
 */
 
+/*
 // Lesson: The Magic of Chaining Methods
 
 const totalDepositsUSDLesson = movements
@@ -327,3 +334,14 @@ const totalDepositsUSDLesson = movements
   .reduce((acc, mov) => acc + mov, 0);
 
 console.log(totalDepositsUSDLesson);
+*/
+
+// Lesson: The find Method
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
