@@ -234,3 +234,14 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 console.log(accounts);
+
+// Lesson: The filter method
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+
+const withdrawals = movements.filter(mov => mov < 0);
+
+console.log(movements);
+console.log(deposits);
+console.log(withdrawals);
