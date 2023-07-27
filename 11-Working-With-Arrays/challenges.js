@@ -134,17 +134,15 @@ GOOD LUCK 😀
 */
 
 console.log('\nCoding Challenge #3\n');
-const calcAverageHumanAgeArrow = (ages) => {
-  const averageHumanAge =
-    ages
-      .map((age) => (age <= 2 ? 2 * age : 16 + age * 4))
-      .filter((age) => age >= 18)
-      .reduce((acc, age) => acc + age, 0) / ages.length;
+const calcAverageHumanAgeArrow = (ages) =>
+  ages
+    .map((age) => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter((age) => age >= 18)
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
 
-  console.log(
-    `The average human age for the dogs given in the array is ${averageHumanAge}`
-  );
-};
+const avg1 = calcAverageHumanAgeArrow([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAgeArrow([16, 6, 10, 5, 6, 1, 4]);
 
-calcAverageHumanAgeArrow([5, 2, 4, 1, 15, 8, 3]);
-calcAverageHumanAgeArrow([16, 6, 10, 5, 6, 1, 4]);
+// console.log(avg1, avg2);
+console.log(`The average age of the dogs is ${avg1}`);
+console.log(`The average age of the dogs is ${avg2}`);
