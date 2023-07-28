@@ -191,6 +191,30 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Find the account index in the accounts array base on the input info
+  const index = accounts.findIndex(
+    account =>
+      account.username === inputCloseUsername.value.trim() &&
+      account.pin === Number(inputClosePin.value)
+  );
+
+  // check if credentials are correct
+  if (index > 0) {
+    // delete the selected account
+    accounts.splice(index, 1);
+
+    // logout of app
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = 'Log in to get started';
+
+    // clear the input values for close account form
+    inputCloseUsername.value = inputClosePin.value = '';
+  }
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
