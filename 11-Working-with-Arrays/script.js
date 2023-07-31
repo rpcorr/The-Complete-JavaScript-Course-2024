@@ -70,10 +70,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -229,6 +231,15 @@ btnClose.addEventListener('click', function (e) {
     // clear the input values for close account form
     inputCloseUsername.value = inputClosePin.value = '';
   }
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+
+  // toggle sorted value
+  sorted = !sorted;
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -473,6 +484,7 @@ console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
 */
 
+/*
 // Lesson: flat and flatMap
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr);
@@ -491,6 +503,7 @@ const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);*/
 
 // produce the above with use of chaining
 
+/*
 const overallBalanceUsingFlat = accounts
   .map(acc => acc.movements)
   .flat()
@@ -501,3 +514,41 @@ const overallBalanceUsingFlatMap = accounts
   .flatMap(acc => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overallBalanceUsingFlatMap);
+*/
+
+// Lesson: Sorting Arrays
+
+// using sort() mutates the original array
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners);
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+console.log(movements.sort()); // does not work because sort is based on strings
+
+// RESOLVE SORTING USING NUMBERS
+
+// return < 0, currentValue, nextValue (keep order)
+// return > 0, nextValue, currentValue (switch order)
+
+// Ascending order
+// movements.sort((currentValue, nextValue) => {
+//   if (currentValue > nextValue) return 1;
+//   if (nextValue > currentValue) return -1;
+// });
+
+movements.sort((currentValue, nextValue) => currentValue - nextValue);
+console.log(movements);
+
+// Decending order
+// movements.sort((currentValue, nextValue) => {
+//   if (currentValue > nextValue) return -1;
+//   if (nextValue > currentValue) return 1;
+// });
+
+movements.sort((currentValue, nextValue) => nextValue - currentValue);
+console.log(movements);
