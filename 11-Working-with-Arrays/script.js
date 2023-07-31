@@ -556,6 +556,8 @@ movements.sort((currentValue, nextValue) => nextValue - currentValue);
 console.log(movements);
 */
 
+/*
+
 // Lesson: More Ways of Creating and Filling Arrays
 const arr = [1, 2, 3, 4, 5, 6, 7];
 console.log(new Array(1, 2, 3, 4, 5, 6, 7));
@@ -591,3 +593,109 @@ labelBalance.addEventListener('click', () => {
 
   const movementsUI2 = [...document.querySelectorAll('.movements__value')];
 });
+*/
+
+// Lesson: Array Methods Practice
+
+// 1. get the sum of all the deposits
+
+// get all the movements arrays
+const bankDepositSum = accounts.map(acc => acc.movements);
+
+// console.log(bankDepositSum);
+
+// get all the values from the arrays and into the main array
+// console.log(bankDepositSum.flat());
+
+// combine map and flat
+const bankDepositSum2 = accounts.map(acc => acc.movements).flat();
+
+// console.log(bankDepositSum2);
+
+// combine map and flat is pretty common, so the flatMap can be use
+const bankDepositSum3 = accounts.flatMap(acc => acc.movements);
+
+// console.log(bankDepositSum3);
+
+// now to filter out the deposits
+const bankDepositSum4 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0);
+
+// console.log(bankDepositSum4);
+
+// now to sum up all the deposit values
+const bankDepositSumFinal = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSumFinal);
+
+// 2. get  total number of deposits that are 1000 or more
+const numDeposits1000MethodOne = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+
+console.log(`Method 1: ${numDeposits1000MethodOne}`);
+
+const numberDeposits1000MethodTwo = accounts
+  .flatMap(acc => acc.movements)
+  //.reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+  //.reduce((count, cur) => (cur >= 1000 ? count++ : count), 0); // produce zero 0
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+
+console.log(`Method 2: ${numberDeposits1000MethodTwo}`);
+
+// Prefixed ++ operator
+let a = 10;
+// console.log(a++);
+console.log(++a);
+console.log(a);
+
+// 3. create an object which contain the sum of the deposits and the withdrawals
+const sums = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(sums);
+
+// using destructuring
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      //cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(deposits, withdrawals);
+
+// 4. convert string to a title case
+// this is a nice title -> This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .trim()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
