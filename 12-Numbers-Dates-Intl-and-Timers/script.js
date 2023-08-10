@@ -406,6 +406,7 @@ console.log(parseInt('230_000')); // produce 230
 
 */
 
+/*
 // Lesson: Working with BigInt
 
 // the biggest number JavaScript safely represent
@@ -448,3 +449,44 @@ console.log(10n / 3n);
 console.log(10 / 3);
 console.log(11n / 3n);
 console.log(12n / 3n);
+*/
+
+// Lesson: Creating Dates
+
+// Create a date
+// const now = new Date();
+// console.log(now);
+
+// console.log(new Date('Aug 10 2023 09:38:57'));
+// console.log(new Date('December 24, 2015'));
+// console.log(new Date(account1.movementsDates[0]));
+
+// console.log(new Date(2037, 10, 19, 15, 23, 5));
+// console.log(new Date(2037, 10, 31)); // produce Dec 1, 2037
+// console.log(new Date(2037, 10, 33)); // produce Dec 3, 2037
+
+// // can pass into the Date constructor the amount of milliseconds passed
+// // since the beginning of the Unix time, which is January 1, 1970
+// console.log(new Date(0));
+// console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear()); // 2037
+console.log(future.getMonth()); // 10
+console.log(future.getDate()); // 19
+console.log(future.getDay()); // get day of the week - 4
+console.log(future.getHours()); // 15
+console.log(future.getMinutes()); // 23
+console.log(future.getSeconds()); // 0
+console.log(future.toISOString());
+console.log(future.getTime());
+
+console.log(new Date(2142274980000));
+
+// create current timestamp
+console.log(Date.now());
+
+future.setFullYear(2040);
+console.log(future);
