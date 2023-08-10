@@ -383,6 +383,7 @@ labelBalance.addEventListener('click', function () {
 });
 */
 
+/*
 // Lesson: Numeric Separators
 
 // 287,460,000,000
@@ -402,3 +403,48 @@ console.log(PI);
 console.log(Number('230000'));
 console.log(Number('230_000')); // will not work, produce NaN
 console.log(parseInt('230_000')); // produce 230
+
+*/
+
+// Lesson: Working with BigInt
+
+// the biggest number JavaScript safely represent
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1); // not correct
+console.log(2 ** 53 + 2); // not correct
+console.log(2 ** 53 + 3); // not correct
+console.log(2 ** 53 + 4); // not correct
+
+console.log(4838430248342043823408394839483204);
+console.log(4838430248342043823408394839483204n);
+console.log(BigInt(4838430248342043823408394839483204)); // doesn't produce the same as line 420
+console.log(BigInt(48384302));
+
+// Operations
+console.log(10000n + 10000n);
+console.log(36286372637263726376237263726372632n * 10000000n);
+// console.log(Math.sqrt(16n)); will not work
+
+// will not work
+const huge = 20289830237283728378237n;
+const num = 23;
+// console.log(huge * num); // will not work
+console.log(huge * BigInt(num)); // will work
+
+// Exceptions
+console.log(20n > 15); // will work // produce true
+console.log(20n === 20); // will work // produce false
+console.log(typeof 20n); // produce BigInt
+console.log(typeof 20); // produce number
+
+console.log(20n == 20); // will work // produce true
+console.log(20n == '20'); // will work // produce true
+
+console.log(huge + ' is REALLY big!!!');
+
+// Divisions
+console.log(10n / 3n);
+console.log(10 / 3);
+console.log(11n / 3n);
+console.log(12n / 3n);
