@@ -351,6 +351,7 @@ console.log((2.345).toFixed(2));
 console.log(+(2.345).toFixed(2));
 */
 
+/*
 // Lesson: The Remainder Operator
 
 console.log(5 % 2); // 1
@@ -380,3 +381,24 @@ labelBalance.addEventListener('click', function () {
     if (i % 3 === 0) row.style.backgroundColor = 'blue';
   });
 });
+*/
+
+// Lesson: Numeric Separators
+
+// 287,460,000,000
+const diameter = 287_460_000_000;
+console.log(diameter);
+
+const price = 345_99;
+console.log(price);
+
+// same number but differentt meaning
+const transferFee1 = 15_00;
+const tranfserFee2 = 1_500;
+
+const PI = 3.14_15;
+console.log(PI);
+
+console.log(Number('230000'));
+console.log(Number('230_000')); // will not work, produce NaN
+console.log(parseInt('230_000')); // produce 230
