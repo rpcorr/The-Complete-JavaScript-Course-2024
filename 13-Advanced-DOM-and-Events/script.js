@@ -78,3 +78,52 @@ document
     // message.remove();
     message.parentElement.removeChild(message); // the old way
   });
+
+// Lesson: Styles, Attributes and Classes
+
+// - Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(message.style.color);
+console.log(message.style.backgroundColor);
+
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// - Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+
+// - Setting Attributes
+logo.alt = 'Beautiful minimalist logo';
+
+//  - Non-standard
+console.log(logo.designer); // will not work
+console.log(logo.getAttribute('designer')); // will work
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// - special kind of attributes: Data attributes
+console.log(logo.dataset.versionNumber);
+
+// - Classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // not "includes" - as in arrays
+
+// Don't use because it will override all the existing classes
+// logo.className = 'Jonas';
