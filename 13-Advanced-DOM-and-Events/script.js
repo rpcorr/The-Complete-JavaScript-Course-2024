@@ -33,41 +33,39 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+///////////////////////////////////////
+// Cookies message
+
+const header = document.querySelector('.header');
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+
+header.append(message);
+
+// Deleting Cookies message
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+  });
+
+// Styling message
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+///////////////////////////////////////
 // Smooth Scrolling
+
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
-// - method 1:
 btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
-
-  console.log(e.target.getBoundingClientRect());
-
-  // pageXOffset and pageYOffset are deprecated
-  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
-
-  console.log('Current scroll (X/Y)', window.scrollX, window.scrollY);
-
-  console.log(
-    'Height/Width of viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
-
-  // // --Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.scrollX,
-  //   s1coords.top + window.scrollY
-  // );
-
-  // // -- Smooth Scrolling  (Old school way)
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: 'smooth',
-  // });
-
   //  -- Smooth Scrolling (Modern Way)
   section1.scrollIntoView({ behavior: 'smooth' });
 });
@@ -77,6 +75,7 @@ btnScrollTo.addEventListener('click', function (e) {
 
 // Lesson: Selecting, Creating, and Deleting Elements
 
+/*
 // Selection elements
 console.log(document.documentElement);
 console.log(document.head);
@@ -95,29 +94,31 @@ console.log(document.getElementsByClassName('btn'));
 // Create and inserting elements
 // .interAdjacentHMTL
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-//message.textContent =
-//  'We use cookies for improved functionality and analytics.';
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
+// //message.textContent =
+// //  'We use cookies for improved functionality and analytics.';
 
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
 
-// header.prepend(message);
-header.append(message);
-// header.append(message.cloneNode(true));
+// // header.prepend(message);
+// header.append(message);
+// // header.append(message.cloneNode(true));
 
 // header.before(message);
 // header.after(message);
 
-// Delete elements
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    // message.remove();
-    message.parentElement.removeChild(message); // the old way
-  });
+// // Delete elements
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function () {
+//     // message.remove();
+//     message.parentElement.removeChild(message); // the old way
+//   });
+*/
 
+/*
 // Lesson: Styles, Attributes and Classes
 
 // - Styles
@@ -166,3 +167,48 @@ logo.classList.contains('c'); // not "includes" - as in arrays
 
 // Don't use because it will override all the existing classes
 // logo.className = 'Jonas';
+*/
+
+/*
+// Lesson: Implementing Smooth Scrolling
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  // - method 1:
+
+  //const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+
+  // console.log(e.target.getBoundingClientRect());
+
+  // pageXOffset and pageYOffset are deprecated
+  // console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  // console.log('Current scroll (X/Y)', window.scrollX, window.scrollY);
+
+  // console.log(
+  //   'Height/Width of viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
+
+  // - method 2:
+
+  // // --Scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   s1coords.top + window.scrollY
+  // );
+
+  // // -- Smooth Scrolling  (Old school way)
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  //  -- Smooth Scrolling (Modern Way)
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+*/
