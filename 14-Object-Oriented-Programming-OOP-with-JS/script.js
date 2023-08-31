@@ -1,6 +1,5 @@
 'use strict';
 
-/*
 // Lesson: Constructor Functions and the new Operator
 const Person = function (firstName, birthYear) {
   // Instance properties
@@ -80,7 +79,6 @@ const h1 = document.querySelector('h1');
 console.dir(h1);
 
 console.dir(x => x + 1);
-*/
 
 // Lesson: E6 Classes
 
@@ -94,6 +92,7 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
+  // Instance methods
   // Methods will be added to .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -116,6 +115,12 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 👋🏼.....');
+    console.log(this);
+  }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
@@ -136,6 +141,8 @@ jessica.greet();
 
 const walter = new PersonCl('Walter Smith', 1965);
 
+PersonCl.hey();
+
 // Lesson: Setters and Getters
 const account = {
   owner: 'Jonas',
@@ -154,3 +161,12 @@ console.log(account.latest);
 
 account.latest = 50;
 console.log(account.movements);
+
+// Lesson: Static Methods
+Person.hey = function () {
+  console.log('Hey there 👋🏼');
+  console.log(this);
+};
+
+// Person.hey();
+// jonas.hey(); doesn't work
