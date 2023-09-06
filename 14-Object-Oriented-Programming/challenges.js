@@ -229,5 +229,13 @@ class EVCl extends CarCl {
 const rivan = new EVCl('Rivan', 120, 23);
 
 console.log(rivan);
-rivan.chargeBattery(90);
-rivan.accelerate().brake().brake().chargeBattery(95).accelerate();
+//console.log(rivan.#charge); // does not work
+rivan
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .brake()
+  .chargeBattery(50)
+  .accelerate();
+
+console.log(rivan.speedUS);
