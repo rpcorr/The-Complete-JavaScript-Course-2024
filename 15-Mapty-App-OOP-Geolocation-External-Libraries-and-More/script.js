@@ -75,11 +75,13 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+
 class App {
   #map;
   #mapZoomLevel = 13;
   #mapEvent;
   #workouts = [];
+  #markers = [];
 
   constructor() {
     // Get user's position
@@ -94,6 +96,7 @@ class App {
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
+  // Getting the position
   _getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
@@ -104,6 +107,7 @@ class App {
       );
   }
 
+  // Load the map
   _loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
@@ -127,6 +131,7 @@ class App {
     });
   }
 
+  // Showing the form
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
@@ -143,11 +148,13 @@ class App {
     setTimeout(() => (form.style.display = 'grid'), 1000);
   }
 
+  // Toggling the elevation form
   _toggleElevationField() {
     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
   }
 
+  //Creating the workouts
   _newWorkout(e) {
     // prevent form from submitting
     e.preventDefault();
@@ -169,9 +176,6 @@ class App {
       const cadence = +inputCadence.value;
       // Check if data is valid
       if (
-        // !Number.isFinite(distance) ||
-        // !Number.isFinite(duration) ||
-        // !Number.isFinite(cadence)
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
@@ -195,7 +199,6 @@ class App {
 
     // Add new object to workout array
     this.#workouts.push(workout);
-    // console.log(workout);
 
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
@@ -211,12 +214,12 @@ class App {
   }
 
   _renderWorkoutMarker(workout) {
-    L.marker(workout.coords)
+    const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
           maxWidth: 250,
-          minwidth: 100,
+          minWidth: 100,
           autoClose: false,
           closeOnClick: false,
           className: `${workout.type}-popup`,
@@ -226,12 +229,26 @@ class App {
         `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
       )
       .openPopup();
+
+    // Storing the markers
+    this.#markers.push(marker);
+
+    // Attaching the id with the marker
+    marker.markID = workout.id;
   }
 
   _renderWorkout(workout) {
     let html = `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
+      <div class="workout-mod__btns">
+        <!--<button class="workout__btn workout__btn--edit">
+          ✏️
+        </button>-->
+        <button class="workout__btn workout__btn--delete">
+          🗑️
+        </button>
+      </div>
       <div class="workout__details">
         <span class="workout__icon">${
           workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
@@ -273,6 +290,10 @@ class App {
     </li>`;
 
     form.insertAdjacentHTML('afterend', html);
+
+    const btnDelete = document.querySelector('.workout__btn--delete');
+
+    btnDelete.addEventListener('click', this._deleteWorkout.bind(this));
   }
 
   _moveToPopup(e) {
@@ -285,7 +306,7 @@ class App {
       work => work.id === workoutEl.dataset.id
     );
 
-    //console.log(workout);
+    if (!workout) return; // prevent errors if workout is deleted
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
@@ -316,9 +337,28 @@ class App {
     });
   }
 
-  reset() {
-    localStorage.removeItem('workouts');
-    location.reload();
+  _deleteWorkout(e) {
+    // Find the selected workout element and its index in the workouts array
+    const clickedId = e.target.closest('.workout').dataset.id;
+    const index = this.#workouts.findIndex(ind => ind.id === clickedId);
+
+    // Remove the workout from the array
+    this.#workouts.splice(index, 1);
+
+    // Update the local storage with the new workouts array
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+
+    // Check if the workouts array is empty
+    if (this.#workouts.length === 0) {
+      // If it's empty, remove the workouts from local storage and hide the modify buttons container
+      localStorage.removeItem('workouts');
+    }
+
+    // Remove the marker from map
+    this.#markers.find(work => work.markID === clickedId).remove();
+
+    // Remove the workout element from sidebar
+    e.target.closest('.workout').remove();
   }
 }
 

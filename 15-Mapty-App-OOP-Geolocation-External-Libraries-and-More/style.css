@@ -87,9 +87,22 @@ a:visited {
 .workout__title {
   font-size: 1.7rem;
   font-weight: 600;
-  grid-column: 1 / -1;
+  grid-column: 1 / 4;
 }
 
+.workout-mod__btns {
+  grid-column: 4 / -1;
+  display: flex;
+  justify-content: right;
+}
+
+.workout__btn {
+  padding: 0.4rem 0.5rem;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 .workout__details {
   display: flex;
   align-items: baseline;
