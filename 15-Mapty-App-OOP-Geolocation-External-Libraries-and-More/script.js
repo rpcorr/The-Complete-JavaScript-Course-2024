@@ -75,6 +75,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const containerDeleteAll = document.querySelector('.modify--delete');
 
 class App {
   #map;
@@ -94,6 +95,10 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    containerDeleteAll.addEventListener(
+      'click',
+      this._deleteAllWorkouts.bind(this)
+    );
   }
 
   // Getting the position
@@ -289,11 +294,15 @@ class App {
       </div>
     </li>`;
 
+    // add new entry to the end
     form.insertAdjacentHTML('afterend', html);
 
+    // add event listener to the delete icon for each workout
     const btnDelete = document.querySelector('.workout__btn--delete');
-
     btnDelete.addEventListener('click', this._deleteWorkout.bind(this));
+
+    // display the "Delete All Activities" button
+    containerDeleteAll.classList.remove('hidden');
   }
 
   _moveToPopup(e) {
@@ -352,6 +361,9 @@ class App {
     if (this.#workouts.length === 0) {
       // If it's empty, remove the workouts from local storage and hide the modify buttons container
       localStorage.removeItem('workouts');
+
+      // hide the "Delete All Activities" button
+      containerDeleteAll.classList.add('hidden');
     }
 
     // Remove the marker from map
@@ -359,6 +371,24 @@ class App {
 
     // Remove the workout element from sidebar
     e.target.closest('.workout').remove();
+  }
+
+  _deleteAllWorkouts() {
+    // Remove workouts from sidebar
+    document.querySelectorAll('.workout').forEach(e => e.remove());
+
+    // Remove all markers from map
+    this.#markers.forEach(work => work.remove());
+
+    // empty the arrays
+    this.#workouts.splice(0, this.#workouts.length);
+    this.#markers.splice(0, this.#markers.length);
+
+    // delete the workouts localstorage
+    localStorage.removeItem('workouts');
+
+    // hide the "Delete All Activities" button
+    containerDeleteAll.classList.add('hidden');
   }
 }
 
