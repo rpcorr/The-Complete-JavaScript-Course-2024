@@ -76,6 +76,7 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const containerDeleteAll = document.querySelector('.modify--delete');
+const btnCancel = document.querySelector('.btn--cancel');
 
 class App {
   #map;
@@ -92,7 +93,7 @@ class App {
     this._getLocalStorage();
 
     // Attach event handlers
-    form.addEventListener('submit', this._newWorkout.bind(this));
+    form.addEventListener('submit', this._newWorkout.bind(this)); // enter button submits form
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     containerDeleteAll.addEventListener(
@@ -141,6 +142,8 @@ class App {
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
     inputDistance.focus();
+
+    btnCancel.addEventListener('click', this._hideForm.bind(this));
   }
 
   _hideForm() {
