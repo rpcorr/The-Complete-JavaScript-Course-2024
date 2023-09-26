@@ -61,9 +61,12 @@ class Cycling extends Workout {
   }
 }
 
-// const run1 = new Running([39, -12], 5.2, 24, 178);
-// const cycling1 = new Cycling([39, -12], 27, 95, 523);
-// console.log(run1, cycling1);
+// dummy objects
+const run1 = new Running([39, -12], 5.2, 24, 178);
+const cycling1 = new Cycling([39, -12], 27, 95, 523);
+console.log(run1, cycling1);
+
+// to call click method type the following in the console: run1.click(); cycling1.click()
 
 //////////////////////////////////////
 // APPLICATION ARCHITECTURE
@@ -132,6 +135,7 @@ class App {
     // handling clicks on map
     this.#map.on('click', this._showForm.bind(this));
 
+    // render markers (from data in local)
     this.#workouts.forEach(work => {
       this._renderWorkoutMarker(work);
     });
@@ -151,6 +155,7 @@ class App {
     // prettier-ignore
     inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
 
+    // prevent animation when hiding the form and showing the result
     form.style.display = 'none';
     form.classList.add('hidden');
     setTimeout(() => (form.style.display = 'grid'), 1000);
@@ -274,7 +279,7 @@ class App {
         <div class="workout__details">
           <span class="workout__icon">⚡️</span>
           <span class="workout__value">${workout.pace.toFixed(1)}</span>
-          <span class="workout__unit">km/h</span>
+          <span class="workout__unit">min/km</span>
         </div>
         <div class="workout__details">
           <span class="workout__icon">🦶🏼</span>
