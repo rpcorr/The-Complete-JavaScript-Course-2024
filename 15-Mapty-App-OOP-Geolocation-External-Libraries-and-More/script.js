@@ -348,30 +348,14 @@ class App {
     if (!data) return;
 
     // restore workouts and the prototype chain
-
-    // option 1:
-
-    // data.forEach(work => {
-    //   let obj;
-    //   if (work.type === 'running') obj = new Running();
-    //   if (work.type === 'cycling') obj = new Cycling();
-
-    //   Object.assign(obj, work);
-    //   this.#workouts.push(obj);
-    // });
-
-    // option 2:
-    this.#workouts = data.map(work => {
-      let obj;
-      if (work.type === 'running') obj = new Running();
-      if (work.type === 'cycling') obj = new Cycling();
-
-      Object.assign(obj, work);
-      return obj;
-    });
-
-    this.#workouts.forEach(work => {
-      this._renderWorkout(work);
+    this.#workouts = data;
+    this.#workouts.forEach(workout => {
+      workout =
+        workout.type === 'running'
+          ? Object.setPrototypeOf(workout, Running.prototype)
+          : Object.setPrototypeOf(workout, Cycling.prototype);
+      console.log(workout);
+      this._renderWorkout(workout);
     });
   }
 
