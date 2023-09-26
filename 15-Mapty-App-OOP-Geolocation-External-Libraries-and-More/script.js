@@ -64,7 +64,7 @@ class Cycling extends Workout {
 // dummy objects
 const run1 = new Running([39, -12], 5.2, 24, 178);
 const cycling1 = new Cycling([39, -12], 27, 95, 523);
-console.log(run1, cycling1);
+// console.log(run1, cycling1);
 
 // to call click method type the following in the console: run1.click(); cycling1.click()
 
@@ -333,7 +333,9 @@ class App {
     });
 
     // using the public interface
-    // workout.click();
+    workout.click();
+
+    console.log(workout);
   }
 
   _setLocalStorage() {
@@ -342,12 +344,31 @@ class App {
 
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
-    // console.log(data);
 
     if (!data) return;
 
-    // restore workouts
-    this.#workouts = data;
+    // restore workouts and the prototype chain
+
+    // option 1:
+
+    // data.forEach(work => {
+    //   let obj;
+    //   if (work.type === 'running') obj = new Running();
+    //   if (work.type === 'cycling') obj = new Cycling();
+
+    //   Object.assign(obj, work);
+    //   this.#workouts.push(obj);
+    // });
+
+    // option 2:
+    this.#workouts = data.map(work => {
+      let obj;
+      if (work.type === 'running') obj = new Running();
+      if (work.type === 'cycling') obj = new Cycling();
+
+      Object.assign(obj, work);
+      return obj;
+    });
 
     this.#workouts.forEach(work => {
       this._renderWorkout(work);
