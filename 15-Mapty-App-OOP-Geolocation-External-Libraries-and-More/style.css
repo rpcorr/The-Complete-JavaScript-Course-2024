@@ -61,7 +61,7 @@ a:visited {
   background-color: var(--color-dark--2);
   border-radius: 5px;
   padding: 1.5rem 2.25rem;
-  margin: 0 auto 1.75rem;
+  margin: 2.75rem auto 1.75rem;
   cursor: pointer;
   display: grid;
   grid-template-columns: 1fr 1fr;
