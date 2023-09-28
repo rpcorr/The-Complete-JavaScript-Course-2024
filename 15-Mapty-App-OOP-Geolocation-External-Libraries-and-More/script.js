@@ -77,7 +77,8 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
-const containerDeleteAll = document.querySelector('.modify--delete');
+const modifyContainer = document.querySelector('.modify__container');
+const modifyDeleteAll = document.querySelector('.modify--delete');
 const btnCancel = document.querySelector('.btn--cancel');
 
 class App {
@@ -98,7 +99,7 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this)); // enter button submits form
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-    containerDeleteAll.addEventListener(
+    modifyDeleteAll.addEventListener(
       'click',
       this._deleteAllWorkouts.bind(this)
     );
@@ -326,7 +327,7 @@ class App {
     btnDelete.addEventListener('click', this._deleteWorkout.bind(this));
 
     // display the "Delete All Activities" button
-    containerDeleteAll.classList.remove('hidden');
+    modifyContainer.classList.remove('hidden');
   }
 
   _moveToPopup(e) {
@@ -453,7 +454,7 @@ class App {
       localStorage.removeItem('workouts');
 
       // hide the "Delete All Activities" button
-      containerDeleteAll.classList.add('hidden');
+      modifyContainer.classList.add('hidden');
     }
 
     // Remove the marker from map
@@ -478,7 +479,7 @@ class App {
     localStorage.removeItem('workouts');
 
     // hide the "Delete All Activities" button
-    containerDeleteAll.classList.add('hidden');
+    modifyContainer.classList.add('hidden');
   }
 
   _refreshWorkouts() {
