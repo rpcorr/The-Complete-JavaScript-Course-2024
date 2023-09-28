@@ -65,7 +65,6 @@ class Cycling extends Workout {
 const run1 = new Running([39, -12], 5.2, 24, 178);
 const cycling1 = new Cycling([39, -12], 27, 95, 523);
 // console.log(run1, cycling1);
-
 // to call click method type the following in the console: run1.click(); cycling1.click()
 
 //////////////////////////////////////
@@ -124,7 +123,6 @@ class App {
 
     const coords = [latitude, longitude];
 
-    // console.log(this);
     this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -147,6 +145,14 @@ class App {
     form.classList.remove('hidden');
     inputDistance.focus();
 
+    // add new--activity class to form to adjust height
+    form.classList.add('new--activity');
+
+    // remove edit--activity class from form
+    form.classList.remove('edit--activity');
+
+    // display cancel button and add an event listener
+    btnCancel.classList.remove('hidden');
     btnCancel.addEventListener('click', this._hideForm.bind(this));
   }
 
@@ -159,6 +165,12 @@ class App {
     form.style.display = 'none';
     form.classList.add('hidden');
     setTimeout(() => (form.style.display = 'grid'), 1000);
+
+    // remove new--activity class to form to adjust height
+    form.classList.remove('new--activity');
+
+    // remove edit--activity class from form
+    form.classList.remove('edit--activity');
   }
 
   // Toggling the elevation form
@@ -255,9 +267,9 @@ class App {
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
       <div class="workout-mod__btns">
-        <!--<button class="workout__btn workout__btn--edit">
+        <button class="workout__btn workout__btn--edit">
           ✏️
-        </button>-->
+        </button>
         <button class="workout__btn workout__btn--delete">
           🗑️
         </button>
@@ -305,6 +317,10 @@ class App {
     // add new entry to the end
     form.insertAdjacentHTML('afterend', html);
 
+    // add event listener to the edit icon for each workout
+    const btnEdit = document.querySelector('.workout__btn--edit');
+    btnEdit.addEventListener('click', this._editWorkout.bind(this));
+
     // add event listener to the delete icon for each workout
     const btnDelete = document.querySelector('.workout__btn--delete');
     btnDelete.addEventListener('click', this._deleteWorkout.bind(this));
@@ -315,7 +331,6 @@ class App {
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
-    // console.log(workoutEl);
 
     if (!workoutEl) return;
 
@@ -357,6 +372,68 @@ class App {
       console.log(workout);
       this._renderWorkout(workout);
     });
+  }
+
+  _editWorkout(e) {
+    const workoutEl = e.target.closest('.workout');
+
+    if (!workoutEl) return;
+
+    const selectedWorkout = this.#workouts.find(
+      currentWorkout => currentWorkout.id === workoutEl.dataset.id
+    );
+
+    // show the form
+    this._showForm();
+
+    // hide btnCancel
+    btnCancel.classList.add('hidden');
+
+    // add edit--activity class to form
+    form.classList.add('edit--activity');
+
+    // remove new--activity class from form
+    form.classList.remove('new--activity');
+
+    // populate form fields with existing values
+    inputDistance.value = selectedWorkout.distance;
+    inputDuration.value = selectedWorkout.duration;
+    selectedWorkout.cadence && (inputCadence.value = selectedWorkout.cadence);
+    selectedWorkout.elevationGain &&
+      (inputElevation.value = selectedWorkout.elevationGain);
+
+    // toggle cadence and elevation fields base on selectedWorkout type
+    if (inputType.value !== selectedWorkout.type) {
+      inputType.value = selectedWorkout.type;
+      this._toggleElevationField();
+    }
+
+    // re-define #mapEvent
+    const lat = selectedWorkout.coords[0];
+    const lng = selectedWorkout.coords[1];
+
+    const coordsMap = {
+      latlng: { lat: lat, lng: lng },
+    };
+
+    this.#mapEvent = coordsMap;
+
+    // Delete original workout
+    this._deleteWorkoutById(selectedWorkout.id);
+  }
+
+  _deleteWorkoutById(id) {
+    // check to see if there are workouts
+    if (this.#workouts.length > 0) {
+      // filter out the deleted workout
+      this.#workouts = this.#workouts.filter(e => e.id !== id);
+
+      // update workouts with out the deleted workout
+      this._refreshWorkouts();
+
+      // remove marker from map
+      this._refreshMap();
+    }
   }
 
   _deleteWorkout(e) {
@@ -402,6 +479,27 @@ class App {
 
     // hide the "Delete All Activities" button
     containerDeleteAll.classList.add('hidden');
+  }
+
+  _refreshWorkouts() {
+    this._setLocalStorage();
+    containerWorkouts.querySelectorAll('.workout').forEach(el => el.remove());
+    this._getLocalStorage();
+  }
+
+  _refreshMap(coords) {
+    const currentCoords = !coords
+      ? {
+          coords: {
+            latitude: this.#map.getCenter().lat,
+            longitude: this.#map.getCenter().lng,
+          },
+        }
+      : coords;
+
+    // reload map
+    this.#map.remove();
+    this._loadMap(currentCoords);
   }
 }
 
