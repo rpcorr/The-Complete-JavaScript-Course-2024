@@ -78,6 +78,10 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const modifyContainer = document.querySelector('.modify__container');
+const modifySort = document.querySelector('.modify--sort');
+const sortMenu = document.querySelector('.sort__by__input__menu');
+const sortAsc = document.querySelector('.asc');
+const sortDesc = document.querySelector('.desc');
 const modifyDeleteAll = document.querySelector('.modify--delete');
 const btnCancel = document.querySelector('.btn--cancel');
 
@@ -99,6 +103,9 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this)); // enter button submits form
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    modifySort.addEventListener('click', this._sortWorkouts.bind(this));
+    sortAsc.addEventListener('click', this._sortWorkoutsAsc.bind(this));
+    sortDesc.addEventListener('click', this._sortWorkoutsDesc.bind(this));
     modifyDeleteAll.addEventListener(
       'click',
       this._deleteAllWorkouts.bind(this)
@@ -351,7 +358,7 @@ class App {
     // using the public interface
     workout.click();
 
-    console.log(workout);
+    // console.log(workout);
   }
 
   _setLocalStorage() {
@@ -421,6 +428,93 @@ class App {
 
     // Delete original workout
     this._deleteWorkoutById(selectedWorkout.id);
+  }
+
+  _sortWorkouts() {
+    this._sortByProperty(sortMenu.value);
+    // store sort value in local storage to obtain later
+    if (sortMenu.selectedIndex != 0)
+      localStorage.setItem('sortBy', sortMenu.value);
+    sortMenu.selectedIndex = 0;
+  }
+
+  _sortByProperty(sortByCriterion) {
+    // if selected value is sortBy exit the function
+    if (sortByCriterion === 'sortBy') return;
+
+    // Create two arrays to check if workouts are already sorted
+    const sortByCriterionFirstArray = this._mapSortByCriterion(this.#workouts);
+    const sortByCriterionSecondArray = this._mapSortByCriterion(
+      this._initialSort(this.#workouts, -1)
+    );
+
+    // if workouts arrays are already sorted then sort in reverse order.
+    if (
+      sortByCriterionFirstArray.every(
+        (el, i) => el === sortByCriterionSecondArray[i]
+      )
+    ) {
+      this._initialSort(this.#workouts, 1);
+    } else {
+      this._initialSort(this.#workouts, -1);
+    }
+
+    this._refreshWorkouts();
+  }
+
+  // sort array by the selected type
+  _initialSort(arr, n) {
+    return arr.sort(function (a, b) {
+      if (
+        !a[localStorage.getItem('sortBy')] &&
+        b[localStorage.getItem('sortBy')]
+      ) {
+        return -2;
+      }
+      if (
+        a[localStorage.getItem('sortBy')] &&
+        !b[localStorage.getItem('sortBy')]
+      ) {
+        return 2;
+      }
+
+      if (
+        !a[localStorage.getItem('sortBy')] &&
+        !b[localStorage.getItem('sortBy')]
+      ) {
+        return 0;
+      }
+
+      return b[localStorage.getItem('sortBy')] <
+        a[localStorage.getItem('sortBy')]
+        ? -n
+        : n;
+    });
+  }
+
+  // Create an array for the sort by criterion values
+  _mapSortByCriterion(arr) {
+    return arr.map(el => el[localStorage.getItem('sortBy')]);
+  }
+
+  _sortWorkoutsAsc() {
+    // obtain the workouts array in ascending order
+    this._initialSort(this.#workouts, 1);
+
+    this._refreshWorkouts();
+
+    //console.log(localStorage.getItem('sortBy'));
+    sortMenu.selectedIndex = localStorage.getItem('sortBy');
+  }
+
+  _sortWorkoutsDesc() {
+    // obtain the workouts array in descending order
+    this._initialSort(this.#workouts, -1);
+
+    this._refreshWorkouts();
+
+    //console.log(localStorage.getItem('sortBy'));
+    sortMenu.selectedWorkout = localStorage.getItem('sortBy');
   }
 
   _deleteWorkoutById(id) {
@@ -509,11 +603,12 @@ const app = new App();
 // TO DO:
 /*
   EASY
-  1. Ability to edit a workout
-  2. Ability to delete a workout
-  3. Ability to delete all workouts
-  4. Ability to sort workouts by a certain field (e.g. distance). Take a look at Bankist
-  5. Re-build Running and Cycling objects coming from local storage
+  1. Ability to edit a workout - Completed
+  2. Ability to delete a workout - Completed
+  3. Ability to delete all workouts - Completed
+  4. Ability to sort workouts by a certain field 
+     (e.g. distance). Take a look at Bankist - Completed
+  5. Re-build Running and Cycling objects coming from local storage - Completed
   6. More realistic error and confirmation messages. e.g. avoid using alert messages
 
   HARDER
