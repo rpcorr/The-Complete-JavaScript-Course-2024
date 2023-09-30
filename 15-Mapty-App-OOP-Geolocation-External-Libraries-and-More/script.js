@@ -84,6 +84,7 @@ const sortAsc = document.querySelector('.asc');
 const sortDesc = document.querySelector('.desc');
 const modifyDeleteAll = document.querySelector('.modify--delete');
 const btnCancel = document.querySelector('.btn--cancel');
+const errorMessageContainer = document.querySelector('.error__message');
 
 class App {
   #map;
@@ -114,13 +115,15 @@ class App {
 
   // Getting the position
   _getPosition() {
-    if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition(
-        this._loadMap.bind(this),
-        function () {
-          alert('Could not get your position');
-        }
-      );
+    // check for internet connection
+    if (!window.navigator.onLine) {
+      errorMessageContainer.classList.remove('hidden');
+      errorMessageContainer.textContent =
+        'Could not get your position. Check your Internet connection.';
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), null);
   }
 
   // Load the map
@@ -211,9 +214,12 @@ class App {
       if (
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
-      )
-        return alert('Input have to be positive numbers!');
-
+      ) {
+        errorMessageContainer.classList.remove('hidden');
+        errorMessageContainer.textContent =
+          'Input have to be positive numbers!';
+        return;
+      }
       workout = new Running([lat, lng], distance, duration, cadence);
     }
 
@@ -224,11 +230,18 @@ class App {
       if (
         !validInputs(distance, duration, elevation) ||
         !allPositive(distance, duration)
-      )
-        return alert('Input have to be positive numbers!');
+      ) {
+        errorMessageContainer.classList.remove('hidden');
+        errorMessageContainer.textContent =
+          'Input have to be positive numbers!';
+        return;
+      }
 
       workout = new Cycling([lat, lng], distance, duration, elevation);
     }
+
+    // Remove Error Message container (if present)
+    errorMessageContainer.classList.add('hidden');
 
     // Add new object to workout array
     this.#workouts.push(workout);
@@ -609,7 +622,8 @@ const app = new App();
   4. Ability to sort workouts by a certain field 
      (e.g. distance). Take a look at Bankist - Completed
   5. Re-build Running and Cycling objects coming from local storage - Completed
-  6. More realistic error and confirmation messages. e.g. avoid using alert messages
+  6. More realistic error and confirmation messages. 
+     e.g. avoid using alert messages - Completed
 
   HARDER
   7. Position Map to show all the workouts (very hard)
