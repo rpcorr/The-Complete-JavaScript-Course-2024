@@ -78,6 +78,7 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 const modifyContainer = document.querySelector('.modify__container');
+const showAllWorkouts = document.querySelector('.modify--show-all-workouts');
 const modifySort = document.querySelector('.modify--sort');
 const sortMenu = document.querySelector('.sort__by__input__menu');
 const sortAsc = document.querySelector('.asc');
@@ -104,6 +105,7 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this)); // enter button submits form
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    showAllWorkouts.addEventListener('click', this._showAllWorkouts.bind(this));
     modifySort.addEventListener('click', this._sortWorkouts.bind(this));
     sortAsc.addEventListener('click', this._sortWorkoutsAsc.bind(this));
     sortDesc.addEventListener('click', this._sortWorkoutsDesc.bind(this));
@@ -443,6 +445,25 @@ class App {
     this._deleteWorkoutById(selectedWorkout.id);
   }
 
+  _showAllWorkouts() {
+    // create arrays for all the latitude and longitude coordinates on the map
+    const latitudes = this.#workouts.map(workout => workout.coords[0]);
+    const longitudes = this.#workouts.map(workout => workout.coords[1]);
+
+    // retrieve the min and max latitudes and longitudes values from collections of coordinates
+    const latitudeRadius = [Math.min(...latitudes), Math.max(...latitudes)];
+    const longitudeRadius = [Math.min(...longitudes), Math.max(...longitudes)];
+
+    // create a map boundary radius array
+    const mapBoundaryRadius = [
+      [latitudeRadius[0], longitudeRadius[0]],
+      [latitudeRadius[1], longitudeRadius[1]],
+    ];
+
+    // pan map to the defined boundary radius
+    this.#map.flyToBounds(mapBoundaryRadius);
+  }
+
   _sortWorkouts() {
     this._sortByProperty(sortMenu.value);
     // store sort value in local storage to obtain later
@@ -626,7 +647,7 @@ const app = new App();
      e.g. avoid using alert messages - Completed
 
   HARDER
-  7. Position Map to show all the workouts (very hard)
+  7. Position Map to show all the workouts (very hard) - Completed
   8. Ability to draw lines and shapes instead of just points (very hard)
 
   ONLY AFTER ASYNCHRONOUS JAVASCRIPT section
