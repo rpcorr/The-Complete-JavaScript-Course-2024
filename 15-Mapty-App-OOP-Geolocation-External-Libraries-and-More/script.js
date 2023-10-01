@@ -143,6 +143,24 @@ class App {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
+    // get current position
+    L.circle([latitude, longitude], 10, {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+    })
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+        })
+      )
+      .setPopupContent('📌 Current location')
+      .openPopup();
+
     // handling clicks on map
     this.#map.on('click', this._showForm.bind(this));
 
