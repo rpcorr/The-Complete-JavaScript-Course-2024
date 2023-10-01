@@ -472,10 +472,20 @@ class App {
     const latitudeRadius = [Math.min(...latitudes), Math.max(...latitudes)];
     const longitudeRadius = [Math.min(...longitudes), Math.max(...longitudes)];
 
+    // Set a 15% margin to target boundary
+    const marginLatitude = (latitudeRadius[1] - latitudeRadius[0]) * 0.15;
+    const marginLongitude = (longitudeRadius[1] - longitudeRadius[0]) * 0.15;
+
     // create a map boundary radius array
     const mapBoundaryRadius = [
-      [latitudeRadius[0], longitudeRadius[0]],
-      [latitudeRadius[1], longitudeRadius[1]],
+      [
+        latitudeRadius[0] - marginLatitude,
+        longitudeRadius[0] - marginLongitude,
+      ],
+      [
+        latitudeRadius[1] + marginLatitude,
+        longitudeRadius[1] + marginLongitude,
+      ],
     ];
 
     // pan map to the defined boundary radius
