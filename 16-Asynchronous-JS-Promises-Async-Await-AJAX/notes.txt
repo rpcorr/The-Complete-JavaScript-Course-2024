@@ -1,0 +1,9 @@
+The base URL of the API used throughout this section has changed
+
+Instead of: 
+
+https://restcountries.eu/rest/v2/
+
+It's now:
+
+https://countries-api-836d.onrender.com/countries/
