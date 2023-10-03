@@ -7,6 +7,9 @@ const countriesContainer = document.querySelector('.countries');
 /*
 
 LESSON: OUR First AJAX Call: XMLHttpRequest
+/*
+
+LESSON: OUR First AJAX Call: XMLHttpRequest
 
 // old school way of making a AJAX call
 const getCountryData = function (country) {
