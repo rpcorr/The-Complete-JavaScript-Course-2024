@@ -36,7 +36,7 @@ const renderError = function (msg) {
 ///////////////////////////////////////
 /*
 
-LESSON: OUR First AJAX Call: XMLHttpRequest
+
 /*
 
 LESSON: OUR First AJAX Call: XMLHttpRequest
@@ -89,7 +89,7 @@ getCountryData('usa');
  */
 
 /*
-// LESSON: Welcome to Callback
+// LESSON: Welcome to Callback Hell
 
 const getCountryAndNeighbour = function (country) {
   // AJAX call country 1
@@ -254,6 +254,8 @@ btn.addEventListener('click', function () {
 
 */
 
+/*
+
 // Lesson: Throwing Errors Manually
 
 const getJSON = function (url, errorMsg = 'Something went wrong') {
@@ -333,3 +335,13 @@ btn.addEventListener('click', function () {
 });
 
 // getCountryData('dafsffd');
+*/
+
+// LESSON: The Event Loop in Practice
+console.log('Test start'); // 1st
+setTimeout(() => console.log('0 sec timer'), 0); // 4th
+Promise.resolve('Resolved promise 1').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res); // 3rd
+});
+console.log('Test end '); // 2nd
