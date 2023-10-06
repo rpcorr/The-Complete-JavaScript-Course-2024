@@ -337,6 +337,7 @@ btn.addEventListener('click', function () {
 // getCountryData('dafsffd');
 */
 
+/*
 // LESSON: The Event Loop in Practice
 console.log('Test start'); // 1st
 setTimeout(() => console.log('0 sec timer'), 0); // 4th
@@ -345,3 +346,60 @@ Promise.resolve('Resolved promise 1').then(res => {
   console.log(res); // 3rd
 });
 console.log('Test end '); // 2nd
+*/
+
+// Lesson: Building a Simple Promise
+
+const lotteryPromise = new Promise(function (reslove, reject) {
+  console.log('Lottery draw is happening 🔮');
+
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      reslove('You WIN 💰');
+    } else {
+      reject(new Error('You lost your money 💩 '));
+    }
+  }, 2000);
+});
+
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout (a more real world example)
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('I waited for 1 second');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 3 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('I waited for 4 seconds'));
+
+// example of call back hell reference
+// setTimeout(() => {
+//   console.log('1 second passed');
+//   setTimeout(() => {
+//     console.log('2 second passed');
+//     setTimeout(() => {
+//       console.log('3 second passed');
+//       setTimeout(() => {
+//         console.log('4 second passed');
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+
+// a way to very easy create a fulfilled or rejected promise immediately
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('Problem')).catch(x => console.error(x));
