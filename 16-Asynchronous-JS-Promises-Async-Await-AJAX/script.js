@@ -25,7 +25,7 @@ const renderCountry = function (data, className = '') {
         </article>`;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
@@ -348,6 +348,7 @@ Promise.resolve('Resolved promise 1').then(res => {
 console.log('Test end '); // 2nd
 */
 
+/*
 // Lesson: Building a Simple Promise
 
 const lotteryPromise = new Promise(function (reslove, reject) {
@@ -403,3 +404,57 @@ wait(1)
 // a way to very easy create a fulfilled or rejected promise immediately
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem')).catch(x => console.error(x));
+
+*/
+
+// Lesson: Promisifying the Geolocation API
+
+console.log('Getting position');
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      return fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+      );
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log(`You are in ${data.city}, ${data.countryName}`);
+
+      return fetch(
+        `https://countries-api-836d.onrender.com/countries/name/${data.countryName}`
+      );
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Country not found (${res.staus})`);
+
+      return res.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+    })
+    .catch(err => {
+      console.error(`${err.message} 💥`);
+    });
+};
+
+btn.addEventListener('click', whereAmI);
