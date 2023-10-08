@@ -407,6 +407,8 @@ Promise.reject(new Error('Problem')).catch(x => console.error(x));
 
 */
 
+/*
+
 // Lesson: Promisifying the Geolocation API
 
 console.log('Getting position');
@@ -458,3 +460,42 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
+
+*/
+
+// Lesson: Consuming Promises with Async/Await
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// async await resplaces the fetch / then
+// fetch(
+//   `https://countries-api-836d.onrender.com/countries/name/${country}`
+// ).then(res => console.log(res));
+
+const whereAmI = async function () {
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // Reverse Geolocation
+  const resGeo = await fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+  );
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // Country data
+  const res = await fetch(
+    `https://countries-api-836d.onrender.com/countries/name/${dataGeo.countryName}`
+  );
+  const data = await res.json();
+  console.log(data);
+  renderCountry(data[0]);
+};
+
+whereAmI();
+console.log('FIRST');
