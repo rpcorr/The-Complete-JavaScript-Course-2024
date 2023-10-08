@@ -30,7 +30,7 @@ const renderCountry = function (data, className = '') {
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -463,6 +463,7 @@ btn.addEventListener('click', whereAmI);
 
 */
 
+/*
 // Lesson: Consuming Promises with Async/Await
 
 const getPosition = function () {
@@ -499,3 +500,51 @@ const whereAmI = async function () {
 
 whereAmI();
 console.log('FIRST');
+ */
+
+// Lesson: Error Handling With try...catch
+
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+// } catch (err) {
+//   alert(err.message);
+// }
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  try {
+    // Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    // Reverse Geolocation
+    const resGeo = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+    );
+    const dataGeo = await resGeo.json();
+    if (!resGeo.ok) throw new Error('Problem getting location data');
+    console.log(dataGeo);
+
+    // Country data
+    const res = await fetch(
+      `https://countries-api-836d.onrender.com/countries/name/${dataGeo.countryName}`
+    );
+    if (!res.ok) throw new Error('Problem getting country');
+
+    const data = await res.json();
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(`${err} 💥`);
+    renderError(`💥 ${err.message}`);
+  }
+};
+
+whereAmI();
