@@ -1,16 +1,18 @@
 'use strict';
-
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
   clicks = 0;
 
-  constructor(coords, distance, duration) {
+  constructor(coords, distance, duration, temp, windSpeed, humidity) {
     // this.date = ...
     // this.id = ...
     this.coords = coords; // [lat, lng]
     this.distance = distance; // in km
     this.duration = duration; // in minutes
+    this.temp = temp; // in Celsius
+    this.windSpeed = windSpeed; // in km/hr
+    this.humidity = humidity; // %
   }
 
   _setDescription() {
@@ -30,8 +32,8 @@ class Workout {
 class Running extends Workout {
   type = 'running';
 
-  constructor(coords, distance, duration, cadence) {
-    super(coords, distance, duration);
+  constructor(coords, distance, duration, cadence, temp, windSpeed, humidity) {
+    super(coords, distance, duration, temp, windSpeed, humidity);
     this.cadence = cadence;
     this.calcPace();
     this._setDescription();
@@ -47,8 +49,16 @@ class Running extends Workout {
 class Cycling extends Workout {
   type = 'cycling';
 
-  constructor(coords, distance, duration, elevationGain) {
-    super(coords, distance, duration);
+  constructor(
+    coords,
+    distance,
+    duration,
+    elevationGain,
+    temp,
+    windSpeed,
+    humidity
+  ) {
+    super(coords, distance, duration, temp, windSpeed, humidity);
     this.elevationGain = elevationGain;
     this.calcSpeed();
     this._setDescription();
@@ -225,58 +235,88 @@ class App {
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
     const { lat, lng } = this.#mapEvent.latlng;
-    let workout;
+    let workout, weatherDetails;
 
-    // If workout running, create running object
-    if (type === 'running') {
-      const cadence = +inputCadence.value;
-      // Check if data is valid
-      if (
-        !validInputs(distance, duration, cadence) ||
-        !allPositive(distance, duration, cadence)
-      ) {
-        errorMessageContainer.classList.remove('hidden');
-        errorMessageContainer.textContent =
-          'Input have to be positive numbers!';
-        return;
-      }
-      workout = new Running([lat, lng], distance, duration, cadence);
-    }
+    const apiKey = 'a13ac26a83707dbc0a1f0a4bccf011f3';
+    const city = 'Toronto';
 
-    // If workout cycling, create cycling object
-    if (type === 'cycling') {
-      const elevation = +inputElevation.value;
-      // Check if data is valid
-      if (
-        !validInputs(distance, duration, elevation) ||
-        !allPositive(distance, duration)
-      ) {
-        errorMessageContainer.classList.remove('hidden');
-        errorMessageContainer.textContent =
-          'Input have to be positive numbers!';
-        return;
-      }
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+    )
+      .then(response => response.json())
+      .then(data => this._getWeatherDetails(data))
+      .then(res => {
+        weatherDetails = res;
 
-      workout = new Cycling([lat, lng], distance, duration, elevation);
-    }
+        // If workout running, create running object
+        if (type === 'running') {
+          const cadence = +inputCadence.value;
+          // Check if data is valid
+          if (
+            !validInputs(distance, duration, cadence) ||
+            !allPositive(distance, duration, cadence)
+          ) {
+            errorMessageContainer.classList.remove('hidden');
+            errorMessageContainer.textContent =
+              'Input have to be positive numbers!';
+            return;
+          }
+          workout = new Running(
+            [lat, lng],
+            distance,
+            duration,
+            cadence,
+            weatherDetails.temp,
+            weatherDetails.windSpeed,
+            weatherDetails.humidity
+          );
+        }
 
-    // Remove Error Message container (if present)
-    errorMessageContainer.classList.add('hidden');
+        // If workout cycling, create cycling object
+        if (type === 'cycling') {
+          const elevation = +inputElevation.value;
+          // Check if data is valid
+          if (
+            !validInputs(distance, duration, elevation) ||
+            !allPositive(distance, duration)
+          ) {
+            errorMessageContainer.classList.remove('hidden');
+            errorMessageContainer.textContent =
+              'Input have to be positive numbers!';
+            return;
+          }
 
-    // Add new object to workout array
-    this.#workouts.push(workout);
+          workout = new Cycling(
+            [lat, lng],
+            distance,
+            duration,
+            elevation,
+            weatherDetails.temp,
+            weatherDetails.windSpeed,
+            weatherDetails.humidity
+          );
+        }
 
-    // Render workout on map as marker
-    this._renderWorkoutMarker(workout);
+        console.log(workout);
 
-    // Render workout on list
-    this._renderWorkout(workout);
+        // Remove Error Message container (if present)
+        errorMessageContainer.classList.add('hidden');
 
-    // Hide form and clear input
-    this._hideForm();
+        // Add new object to workout array
+        this.#workouts.push(workout);
 
-    // Set local storage to all workouts
-    this._setLocalStorage();
+        // Render workout on map as marker
+        this._renderWorkoutMarker(workout);
+
+        // Render workout on list
+        this._renderWorkout(workout);
+
+        // Hide form and clear input
+        this._hideForm();
+
+        // Set local storage to all workouts
+        this._setLocalStorage();
+      });
   }
 
   _renderWorkoutMarker(workout) {
@@ -339,7 +379,7 @@ class App {
           <span class="workout__value">${workout.cadence}</span>
           <span class="workout__unit">spm</span>
         </div>
-      </li>`;
+      `;
 
     if (workout.type === 'cycling')
       html += `
@@ -353,7 +393,26 @@ class App {
         <span class="workout__value">${workout.elevationGain}</span>
         <span class="workout__unit">m</span>
       </div>
-    </li>`;
+    `;
+
+    html += `<div class="workout__details">
+              <span class="workout__icon">🌡️</span>
+              <span class="workout__value">${Math.round(workout.temp)}</span>
+              <span class="workout__unit">°C</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">💨</span>
+              <span class="workout__value">${Math.round(
+                workout.windSpeed
+              )}</span>
+              <span class="workout__unit">km/hr</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">💦</span>
+              <span class="workout__value">${workout.humidity}</span>
+              <span class="workout__unit">%</span>
+            </div>
+          </li>`;
 
     // add new entry to the end
     form.insertAdjacentHTML('afterend', html);
@@ -658,6 +717,18 @@ class App {
     this.#map.remove();
     this._loadMap(currentCoords);
   }
+
+  _getWeatherDetails(data) {
+    const weatherDetails = {
+      city: data.name,
+      description: data.weather[0].description,
+      temp: data.main.temp,
+      humidity: data.main.humidity,
+      windSpeed: data.wind.speed,
+    };
+
+    return weatherDetails;
+  }
 }
 
 const app = new App();
@@ -680,5 +751,5 @@ const app = new App();
 
   ONLY AFTER ASYNCHRONOUS JAVASCRIPT section
   9. Geocode location from coordinates ("Run in Faro, Portugal")
-  10. Display weather data for workout time and place 
+  10. Display weather data for workout time and place - Completed
 */
