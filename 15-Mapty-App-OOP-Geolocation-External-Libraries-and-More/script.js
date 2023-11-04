@@ -4,15 +4,26 @@ class Workout {
   id = (Date.now() + '').slice(-10);
   clicks = 0;
 
-  constructor(coords, distance, duration, temp, windSpeed, humidity) {
+  constructor(
+    coords,
+    distance,
+    duration,
+    weatherIcon,
+    weatherDescription,
+    temp,
+    windSpeed,
+    humidity
+  ) {
     // this.date = ...
     // this.id = ...
     this.coords = coords; // [lat, lng]
     this.distance = distance; // in km
     this.duration = duration; // in minutes
-    this.temp = temp; // in Celsius
-    this.windSpeed = windSpeed; // in km/hr
-    this.humidity = humidity; // %
+    this.weatherIcon = weatherIcon; // icon from openweathermap.org
+    this.weatherDescription = weatherDescription; // from openweathermap.org
+    this.temp = temp; // in Celsius from openweathermap.org
+    this.windSpeed = windSpeed; // in km/hr from openweathermap.org
+    this.humidity = humidity; // % from openweathermap.org
   }
 
   _setDescription() {
@@ -32,8 +43,27 @@ class Workout {
 class Running extends Workout {
   type = 'running';
 
-  constructor(coords, distance, duration, cadence, temp, windSpeed, humidity) {
-    super(coords, distance, duration, temp, windSpeed, humidity);
+  constructor(
+    coords,
+    distance,
+    duration,
+    cadence,
+    weatherIcon,
+    weatherDescription,
+    temp,
+    windSpeed,
+    humidity
+  ) {
+    super(
+      coords,
+      distance,
+      duration,
+      weatherIcon,
+      weatherDescription,
+      temp,
+      windSpeed,
+      humidity
+    );
     this.cadence = cadence;
     this.calcPace();
     this._setDescription();
@@ -54,11 +84,22 @@ class Cycling extends Workout {
     distance,
     duration,
     elevationGain,
+    weatherIcon,
+    weatherDescription,
     temp,
     windSpeed,
     humidity
   ) {
-    super(coords, distance, duration, temp, windSpeed, humidity);
+    super(
+      coords,
+      distance,
+      duration,
+      weatherIcon,
+      weatherDescription,
+      temp,
+      windSpeed,
+      humidity
+    );
     this.elevationGain = elevationGain;
     this.calcSpeed();
     this._setDescription();
@@ -266,6 +307,8 @@ class App {
             distance,
             duration,
             cadence,
+            weatherDetails.weatherIcon,
+            weatherDetails.weatherDescription,
             weatherDetails.temp,
             weatherDetails.windSpeed,
             weatherDetails.humidity
@@ -291,6 +334,8 @@ class App {
             distance,
             duration,
             elevation,
+            weatherDetails.weatherIcon,
+            weatherDetails.weatherDescription,
             weatherDetails.temp,
             weatherDetails.windSpeed,
             weatherDetails.humidity
@@ -396,6 +441,16 @@ class App {
     `;
 
     html += `<div class="workout__details">
+              <span class="workout__icon"><img
+              src="https://openweathermap.org/img/wn/${workout.weatherIcon}.png"
+              alt=""
+              height="23"
+              width="23"
+            /></span>
+              <span class="workout__unit">${workout.weatherDescription}</span>
+              
+            </div>
+            <div class="workout__details">
               <span class="workout__icon">🌡️</span>
               <span class="workout__value">${Math.round(workout.temp)}</span>
               <span class="workout__unit">°C</span>
@@ -721,7 +776,8 @@ class App {
   _getWeatherDetails(data) {
     const weatherDetails = {
       city: data.name,
-      description: data.weather[0].description,
+      weatherIcon: data.weather[0].icon,
+      weatherDescription: data.weather[0].description,
       temp: data.main.temp,
       humidity: data.main.humidity,
       windSpeed: data.wind.speed,
