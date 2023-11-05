@@ -1,6 +1,5 @@
-/*
+//////////////////////////////////////////////////////
 // *** Lesson Exporting and Importing ES6 Modules ***
-
 
 // Importing module
 // import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
@@ -23,11 +22,10 @@ add('bread', 5);
 add('apples', 4);
 console.log(cart);
 
-*/
-
 /*
-// *** Lesson: Top-Level await (ES2022) ***
 
+///////////////////////////////////////////
+// *** Lesson: Top-Level await (ES2022) ***
 
 // console.log('Starting fetching');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -106,7 +104,8 @@ const {addToCart} = require('./shoppingCart.js');
 */
 
 /*** Lesson: Introduction to NPM ***/
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
@@ -122,3 +121,7 @@ state.user.loggedIn = false;
 console.log(stateClone);
 
 console.log(stateCloneDeep);
+
+if (module.hot) {
+  module.hot.accept();
+}
