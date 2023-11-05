@@ -1,3 +1,7 @@
+/*
+// *** Lesson Exporting and Importing ES6 Modules ***
+
+
 // Importing module
 // import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
 // addToCart('bread', 5);
@@ -18,6 +22,12 @@ add('pizza', 2);
 add('bread', 5);
 add('apples', 4);
 console.log(cart);
+
+*/
+
+/*
+// *** Lesson: Top-Level await (ES2022) ***
+
 
 // console.log('Starting fetching');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -41,3 +51,37 @@ console.log(lastPost);
 // Using Top-Level Await
 const lastPostTopLevelAwait = await getLastPost();
 console.log(lastPostTopLevelAwait);
+
+*/
+
+// Lesson: The Module Pattern
+
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
+    );
+  };
+
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.addToCart('pizza', 2);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost);
