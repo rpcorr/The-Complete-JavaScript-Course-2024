@@ -125,3 +125,26 @@ console.log(stateCloneDeep);
 if (module.hot) {
   module.hot.accept();
 }
+
+/*** Lesson: Configuring Babel and Polyfilling ***/
+class Person {
+  greeting = 'Hey';
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.greeting}, ${this.name}`);
+  }
+}
+
+const jonas = new Person('Jonas');
+
+console.log('Jonas' ?? null);
+
+console.log(cart.find(el => el.quantity >= 2));
+Promise.resolve('TEST').then(x => console.log(x));
+
+import 'core-js/stable';
+//import 'core-js/stable/array/find';
+//import 'core-js/stable/promise';
+
+// use for Polifilling async functions
+import 'regenerator-runtime/runtime';
