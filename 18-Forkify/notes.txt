@@ -1,0 +1,8 @@
+If any problems occur when trying to start the program do the following:
+
+1. install parcel 2: npm i parcel@2 -D
+2. type: npm start
+
+If an error occur asking for Sass do the following:
+
+1. type: npm install
