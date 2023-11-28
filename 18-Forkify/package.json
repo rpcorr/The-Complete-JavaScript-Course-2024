@@ -10,7 +10,7 @@
   "author": "Ronan Corr",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.10.2",
+    "@parcel/transformer-sass": "^2.10.3",
     "parcel": "^2.10.2",
     "sass": "^1.26.10"
   },
