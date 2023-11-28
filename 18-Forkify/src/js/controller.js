@@ -108,6 +108,13 @@ const controlAddRecipe = async function (newRecipe) {
     // Success message
     addRecipeView.renderMessage();
 
+    // Render bookmarkview
+    bookmarksView.render(model.state.bookmarks);
+
+    // Change ID in URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+    // window.history.back()  // go back to previous page as if one clicks the back button in the browser
+
     // Close form window
     setTimeout(function () {
       addRecipeView.toggleWindow();
