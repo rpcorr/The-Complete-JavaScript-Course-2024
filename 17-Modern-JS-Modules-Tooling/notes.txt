@@ -1,3 +1,5 @@
+To run the program type: npm start.
+
 If any problems occur when trying to start the program do the following:
 
 1. install parcel 2: npm i parcel@2 -D
