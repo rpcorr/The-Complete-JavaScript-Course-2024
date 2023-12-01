@@ -31,6 +31,8 @@ GOOD LUCK 😀
 // - Add ... between elements at start and end of string
 // - Log string console
 
+/*
+// Instructor's solution
 const data1 = [17, 21, 23];
 const data2 = [12, 5, -5, 0, 4];
 
@@ -44,3 +46,22 @@ const printForecast = function (arr) {
 };
 
 printForecast(data1);
+*/
+
+const temps1 = [17, 21, 23];
+const temps2 = [12, 5, -5, 0, 4];
+
+function printForecast(tempArr) {
+  let str = '';
+  tempArr.forEach((temp, index) => {
+    str += `${temp}ͦ C in ${index + 1} days ... `;
+  });
+
+  console.log(`... ${str}`);
+}
+
+console.log('Data 1:');
+printForecast(temps1);
+
+console.log('\nData 2:');
+printForecast(temps2);
