@@ -20,15 +20,27 @@ GOOD LUCK 😀
 
 */
 
-const temps1 = [17, 21, 23];
-const temps2 = [12, 5, -5, 0, 4];
+// 1) Understanding the problem
+// - Array transformed to string, separated by ...
+// - What is the X days? Answer: index + 1
 
-function printForecast(temp, index) {
-  console.log(`... ${temp}ͦ C in ${index + 1} days ...`);
-}
+// 2) Breaking up into sub-problems
+// - Transform array into string
+// - Transform each element to string with °C
+// - Strings needs to contain day (index + 1)
+// - Add ... between elements at start and end of string
+// - Log string console
 
-console.log('Data 1:');
-temps1.forEach((temp, index) => printForecast(temp, index));
+const data1 = [17, 21, 23];
+const data2 = [12, 5, -5, 0, 4];
 
-console.log('\nData 2:');
-temps2.forEach((temp, index) => printForecast(temp, index));
+const printForecast = function (arr) {
+  let str = '';
+  for (let i = 0; i < arr.length; i++) {
+    str += `${arr[i]}°C in ${i + 1} days ... `;
+  }
+
+  console.log('... ' + str);
+};
+
+printForecast(data1);
