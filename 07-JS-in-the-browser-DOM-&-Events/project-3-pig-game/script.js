@@ -62,11 +62,13 @@ const switchPlayer = () => {
 const openModal = () => {
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
+  modal.focus();
 };
 
 const closeModal = () => {
   modal.classList.add('hidden');
   overlay.classList.add('hidden');
+  btnRules.focus();
 };
 
 // Rolling dice functionality

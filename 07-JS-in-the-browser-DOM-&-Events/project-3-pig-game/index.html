@@ -41,8 +41,11 @@
       </button>
     </main>
 
-    <div class="modal hidden">
-      <button class="close-modal">&times;</button>
+    <div class="modal hidden" tabindex="-1">
+      <button class="close-modal">
+        <span aria-hidden="true">&times;</span
+        ><span class="sr-only">Close modal window</span>
+      </button>
       <h1>The Pig Game</h1>
       <p>
         The object of The Pig Game is to reach 💯 points or more. Each player
