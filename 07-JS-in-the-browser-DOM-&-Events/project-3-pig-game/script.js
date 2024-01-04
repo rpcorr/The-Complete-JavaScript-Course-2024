@@ -60,14 +60,31 @@ const switchPlayer = () => {
 };
 
 const openModal = () => {
+  // show modal and its overlay
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
+  // hide btnNew, btnRoll, btnHold, btnRules from keyboard users when modal is open
+  btnNew.setAttribute('tabindex', '-1');
+  btnRoll.setAttribute('tabindex', '-1');
+  btnHold.setAttribute('tabindex', '-1');
+  btnRules.setAttribute('tabindex', '-1');
+
+  // give modal the focus, so SRs can read the content
   modal.focus();
 };
 
 const closeModal = () => {
+  // remove tabindex attribute
+  btnNew.removeAttribute('tabindex');
+  btnRoll.removeAttribute('tabindex');
+  btnHold.removeAttribute('tabindex');
+  btnRules.removeAttribute('tabindex');
+
+  // add hidden class to modal and overlay
   modal.classList.add('hidden');
   overlay.classList.add('hidden');
+
+  // give Rules button the focus
   btnRules.focus();
 };
 
