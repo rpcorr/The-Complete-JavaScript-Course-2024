@@ -191,7 +191,9 @@ btnNew.addEventListener('click', init);
 function setRollDiceHoldButtonsAriaLabels(activePlayer) {
   btnRoll.setAttribute(
     'aria-label',
-    `${activePlayer == '0' ? 'player 1' : 'player 2'} roll dice`
+    `${
+      activePlayer == '0' ? 'player 1' : 'player 2'
+    } roll dice and currently has ${scores[activePlayer]} as the tally score`
   );
 
   btnHold.setAttribute(
