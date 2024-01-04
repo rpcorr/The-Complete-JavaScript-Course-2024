@@ -122,7 +122,9 @@ btnRoll.addEventListener('click', () => {
       srSpeak(
         `${
           activePlayer == '0' ? 'player 1' : 'player 2'
-        } rolled a ${dice} and forfeit a score of ${currentScore}.`
+        } rolled a ${dice} and forfeit a score of ${currentScore}, which leaves the tally score at ${
+          scores[activePlayer]
+        }.`
       );
       // if true, switch to next player
       switchPlayer();
