@@ -113,6 +113,11 @@ btnRoll.addEventListener('click', () => {
       currentScore += dice;
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
+      srSpeak(
+        `${
+          activePlayer == '0' ? 'player 1' : 'player 2'
+        } rolled a ${dice} and has a current score of ${currentScore}.`
+      );
     } else {
       // if true, switch to next player
       switchPlayer();
@@ -173,4 +178,21 @@ function setRollDiceHoldButtonsAriaLabels(activePlayer) {
     'aria-label',
     `${activePlayer == '0' ? 'player 1' : 'player 2'} hold dice`
   );
+}
+
+function srSpeak(text, priority) {
+  const el = document.createElement('div');
+  const id = 'speak-' + Date.now();
+  el.setAttribute('id', id);
+  el.setAttribute('aria-live', priority || 'polite');
+  el.classList.add('sr-only');
+  document.body.appendChild(el);
+
+  window.setTimeout(function () {
+    document.getElementById(id).innerHTML = text;
+  }, 100);
+
+  window.setTimeout(function () {
+    document.body.removeChild(document.getElementById(id));
+  }, 1000);
 }
