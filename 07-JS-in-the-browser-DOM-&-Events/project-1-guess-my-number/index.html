@@ -20,7 +20,10 @@
     <main>
       <section class="left">
         <input type="number" id="number" class="guess" />
-        <button class="btn check" id="checkNumber">Check!</button>
+        <button class="btn check" id="checkNumber">
+          <span aria-hidden="true">Check!</span>
+          <span class="sr-only">Check my number!</span>
+        </button>
       </section>
       <section class="right">
         <p class="message">Start guessing...</p>
