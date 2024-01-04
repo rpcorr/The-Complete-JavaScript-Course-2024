@@ -45,6 +45,11 @@ const init = () => {
   // set active player to player0
   player0El.classList.add('player--active');
   player1El.classList.remove('player--active');
+
+  // set aria-label attribute to Roll Dice and Hold buttons to help SRs indicate which player turn it is
+
+  // update roll dice and hold button aria labels
+  setRollDiceHoldButtonsAriaLabels(0);
 };
 
 // run the initial state of game
@@ -55,6 +60,10 @@ const switchPlayer = () => {
   document.getElementById(`current--${activePlayer}`).textContent =
     currentScore;
   activePlayer = activePlayer === 0 ? 1 : 0;
+
+  // update roll dice and hold button aria labels
+  setRollDiceHoldButtonsAriaLabels(activePlayer);
+
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
 };
@@ -153,3 +162,15 @@ document.addEventListener('keydown', e => {
 });
 
 btnNew.addEventListener('click', init);
+
+function setRollDiceHoldButtonsAriaLabels(activePlayer) {
+  btnRoll.setAttribute(
+    'aria-label',
+    `${activePlayer == '0' ? 'player 1' : 'player 2'} roll dice`
+  );
+
+  btnHold.setAttribute(
+    'aria-label',
+    `${activePlayer == '0' ? 'player 1' : 'player 2'} hold dice`
+  );
+}
