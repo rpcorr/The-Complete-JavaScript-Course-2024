@@ -223,3 +223,10 @@ main {
   backdrop-filter: blur(3px);
   z-index: 5;
 }
+
+/* Accessibility Styles */
+
+*:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.8rem #c7365f;
+}
