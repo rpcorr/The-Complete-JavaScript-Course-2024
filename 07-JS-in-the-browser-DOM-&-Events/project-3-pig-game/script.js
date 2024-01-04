@@ -138,6 +138,16 @@ btnHold.addEventListener('click', () => {
 
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
+
+    // 1.1 alert screen readers active player decides to hold and add current score to grand total
+    srSpeak(
+      `${
+        activePlayer == '0' ? 'player 1' : 'player 2'
+      } decides to hold and add a score of ${currentScore} to the tally score which now sits at ${
+        scores[activePlayer]
+      }.`
+    );
+
     // 2. Check if player's score is >=100
     if (scores[activePlayer] >= 100) {
       // Finish the game
@@ -154,6 +164,9 @@ btnHold.addEventListener('click', () => {
       // Switch to the next player
       switchPlayer();
     }
+
+    // give Roll Dice button the focus
+    btnRoll.focus();
   }
 });
 
