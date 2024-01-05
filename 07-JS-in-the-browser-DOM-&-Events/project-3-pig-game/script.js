@@ -218,7 +218,16 @@ document.addEventListener('keydown', e => {
   }
 });
 
-btnNew.addEventListener('click', init);
+btnNew.addEventListener('click', () => {
+  init();
+
+  setTimeout(() => {
+    srSpeak('A new game has started.  Good luck players!');
+  }, 2000);
+
+  // put the focus on Roll Dice button
+  btnRoll.focus();
+});
 
 function setRollDiceButtonAriaLabel(activePlayer) {
   btnRoll.setAttribute(
