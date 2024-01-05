@@ -178,6 +178,10 @@ btnHold.addEventListener('click', () => {
   }
 });
 
+btnRoll.addEventListener('focus', () => {
+  srSpeak(`and currently has ${scores[activePlayer]} as the tally score`);
+});
+
 // Open the rules modal
 btnRules.addEventListener('click', openModal);
 
