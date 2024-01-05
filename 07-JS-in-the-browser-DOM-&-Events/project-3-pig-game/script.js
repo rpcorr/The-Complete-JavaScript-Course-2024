@@ -63,8 +63,11 @@ const switchPlayer = () => {
   activePlayer = activePlayer === 0 ? 1 : 0;
 
   // update roll dice and hold button aria labels
-  setRollDiceButtonAriaLabel(activePlayer);
-  setHoldButtonAriaLabel(activePlayer);
+  // adding this in a setTimeout will read the player who turn ended before annoucing the other player
+  setTimeout(() => {
+    setRollDiceButtonAriaLabel(activePlayer);
+    setHoldButtonAriaLabel(activePlayer);
+  }, 5000);
 
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
@@ -138,6 +141,12 @@ btnRoll.addEventListener('click', () => {
   }
 });
 
+btnRoll.addEventListener('focus', () => {
+  setTimeout(() => {
+    srSpeak(`and currently has ${scores[activePlayer]} as the tally score`);
+  }, 3000);
+});
+
 // Holding the current number functionality
 btnHold.addEventListener('click', () => {
   if (playing) {
@@ -156,6 +165,16 @@ btnHold.addEventListener('click', () => {
       }.`
     );
 
+    const nextPlayerTurn = activePlayer == '0' ? 'player 1' : 'player 2';
+
+    setTimeout(() => {
+      setRollDiceButtonAriaLabel(nextPlayerTurn);
+    }, 2000);
+
+    setTimeout(() => {
+      btnRoll.focus();
+    }, 4000);
+
     // 2. Check if player's score is >=100
     if (scores[activePlayer] >= 100) {
       // Finish the game
@@ -172,14 +191,7 @@ btnHold.addEventListener('click', () => {
       // Switch to the next player
       switchPlayer();
     }
-
-    // give Roll Dice button the focus
-    btnRoll.focus();
   }
-});
-
-btnRoll.addEventListener('focus', () => {
-  srSpeak(`and currently has ${scores[activePlayer]} as the tally score`);
 });
 
 // Open the rules modal
