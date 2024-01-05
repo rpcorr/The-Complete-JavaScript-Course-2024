@@ -115,6 +115,10 @@ btnRoll.addEventListener('click', () => {
       currentScore += dice;
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
+
+      // update active player hold button aria label with current score
+      setHoldButtonAriaLabel(activePlayer);
+
       srSpeak(
         `${
           activePlayer == '0' ? 'player 1' : 'player 2'
