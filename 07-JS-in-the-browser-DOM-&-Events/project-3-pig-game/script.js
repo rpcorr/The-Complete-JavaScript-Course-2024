@@ -167,14 +167,6 @@ btnHold.addEventListener('click', () => {
 
     const nextPlayerTurn = activePlayer == '0' ? 'player 1' : 'player 2';
 
-    setTimeout(() => {
-      setRollDiceButtonAriaLabel(nextPlayerTurn);
-    }, 2000);
-
-    setTimeout(() => {
-      btnRoll.focus();
-    }, 4000);
-
     // 2. Check if player's score is >=100
     if (scores[activePlayer] >= 100) {
       // Finish the game
@@ -187,7 +179,25 @@ btnHold.addEventListener('click', () => {
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.remove('player--active');
+
+      srSpeak(
+        `${
+          activePlayer == '0' ? 'player 1' : 'player 2'
+        } wins the game with a score of ${scores[activePlayer]}.`
+      );
+
+      setTimeout(() => {
+        btnNew.focus();
+      }, 2000);
     } else if (currentScore !== 0) {
+      setTimeout(() => {
+        setRollDiceButtonAriaLabel(nextPlayerTurn);
+      }, 2000);
+
+      setTimeout(() => {
+        btnRoll.focus();
+      }, 4000);
+
       // Switch to the next player
       switchPlayer();
     }
